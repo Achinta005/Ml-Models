@@ -4,22 +4,13 @@ import pandas as pd
 import os
 
 def load_model(model_path):
-    """
-    Load the trained model and preprocessing objects from joblib file
-    
-    Args:
-        model_path (str): Path to the joblib model file
-    
-    Returns:
-        dict: Dictionary containing model and preprocessing objects, or None if failed
-    """
     try:
         if not os.path.exists(model_path):
             print(f"Error: Model file not found at {model_path}")
             return None
         
         model_data = joblib.load(model_path)
-        print(f"Model loaded successfully")
+        print(f"✅ {model_path} loaded successfully")
         return model_data
     
     except Exception as e:

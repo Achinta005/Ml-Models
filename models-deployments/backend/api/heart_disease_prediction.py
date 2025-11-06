@@ -15,14 +15,14 @@ LOCAL_MODEL_PATH = "models/Heart_Disease_Predictor.joblib"
 def download_model_if_needed(url, local_path):
     """Download model file from Google Drive if not cached."""
     if not os.path.exists(local_path):
-        print("Downloading Heart Disease model from Google Drive...")
+        print(f"⬇️ Downloading {os.path.basename(local_path)} from Google Drive...")
         response = requests.get(url, stream=True)
         if response.status_code == 200:
             with open(local_path, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-            print("Model downloaded successfully.")
+            print(f"✅ {os.path.basename(local_path)} downloaded successfully.")
         else:
             print(f"Error downloading model: status {response.status_code}")
             return None

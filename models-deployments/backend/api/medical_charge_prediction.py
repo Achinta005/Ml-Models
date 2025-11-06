@@ -23,7 +23,7 @@ NON_SMOKER_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_
 def download_model_if_needed(url, local_path):
     """Download model file from Google Drive if not cached."""
     if not os.path.exists(local_path):
-        print(f"Downloading {os.path.basename(local_path)} from Google Drive...")
+        print(f"⬇️ Downloading {os.path.basename(local_path)} from Google Drive...")
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
         response = requests.get(url, stream=True)
         if response.status_code == 200:
@@ -31,7 +31,7 @@ def download_model_if_needed(url, local_path):
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-            print(f"{os.path.basename(local_path)} downloaded successfully.")
+            print(f"✅ {os.path.basename(local_path)} downloaded successfully.")
         else:
             print(f"Error downloading model: {response.status_code}")
             return None
@@ -48,7 +48,7 @@ try:
     with open(SMOKER_MODEL_PATH, 'rb') as f:
         smoker_model = pickle.load(f)
 
-    print("✅ Models loaded successfully: (1) non_smoker_model.pkl, (2) smoker_model.pkl")
+    print(f"✅ {NON_SMOKER_MODEL_PATH} and {SMOKER_MODEL_PATH} loaded successfully")
 
 except Exception as e:
     print(f"✗ Error loading models: {e}")

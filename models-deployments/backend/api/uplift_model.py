@@ -49,7 +49,7 @@ try:
 
     model_treated = joblib.load(TREATED_MODEL_PATH)
     model_control = joblib.load(CONTROL_MODEL_PATH)
-    print("✅ Models loaded successfully: (1) uplift_t_model.pkl  (2) uplift_c_model.pkl")
+    print(f"✅ {TREATED_MODEL_PATH} and {CONTROL_MODEL_PATH} loaded successfully")
 except Exception as e:
     print(f"✗ Error loading uplift models: {e}")
     model_treated = None

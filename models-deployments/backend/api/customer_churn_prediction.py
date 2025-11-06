@@ -16,7 +16,7 @@ LOCAL_MODEL_PATH = "models/customer_churn_prediction.joblib"
 def download_model_if_needed(url, local_path):
     """Download model file from Google Drive if not cached locally."""
     if not os.path.exists(local_path):
-        print("Downloading customer churn model from Google Drive...")
+        print(f"⬇️ Downloading {os.path.basename(local_path)} from Google Drive...")
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
         response = requests.get(url, stream=True)
         if response.status_code == 200:
@@ -24,7 +24,7 @@ def download_model_if_needed(url, local_path):
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-            print("Model downloaded successfully.")
+            print(f"✅ {os.path.basename(local_path)} downloaded successfully.")
         else:
             print(f"Error downloading model: status {response.status_code}")
             return None
