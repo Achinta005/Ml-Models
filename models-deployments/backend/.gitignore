@@ -23,8 +23,8 @@ Thumbs.db
 # Ignore everything inside models/
 models/*
 
-# But keep the folder itself
+# Keep the folder itself
 !models/
 
-# And optionally keep an empty placeholder (so Git tracks the folder)
+# Keep an empty placeholder file (optional)
 !models/.gitkeep
