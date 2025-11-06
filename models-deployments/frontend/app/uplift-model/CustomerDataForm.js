@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { AlertCircle, CheckCircle, Loader2, TrendingUp, TrendingDown, Minus, Target, UserCheck, UserX, Users } from "lucide-react";
+import { AlertCircle, CheckCircle, Loader2, TrendingUp, TrendingDown, Minus, Target, UserCheck, UserX, Users,Home } from "lucide-react";
 
 export default function CustomerDataForm() {
   const [formData, setFormData] = useState({
@@ -154,7 +154,23 @@ export default function CustomerDataForm() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
+        <div>
+          <button
+            onClick={() => (window.location.href = "/")}
+            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer"
+          >
+            {/* Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-transform duration-300 group-hover:scale-110"></div>
+
+            {/* Shine Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-500 transform -skew-x-12 group-hover:translate-x-full"></div>
+
+            {/* Button Content */}
+            <Home className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+            <span className="relative z-10">Home</span>
+          </button>
+        </div>
+        <div className="text-center mb-8 ">
           <h1 className="text-4xl font-bold text-slate-800 mb-3">
             Customer Uplift Prediction Model
           </h1>

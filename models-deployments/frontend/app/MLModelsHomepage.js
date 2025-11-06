@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Heart, Activity, TrendingUp, Plus, ArrowRight, UserSearch, Home } from 'lucide-react';
+import { Heart, Activity, TrendingUp, Plus, ArrowRight, UserSearch, Home,ShoppingCart  } from 'lucide-react';
 
 // Local static model configuration (optional custom colors/icons)
 const localModelConfig = [
@@ -10,6 +10,7 @@ const localModelConfig = [
 	{ id: 2, path: '/heart-disease-prediction', icon: Heart, color: 'from-red-500 to-pink-600' },
 	{ id: 3, path: '/customer-churn-prediction', icon: UserSearch, color: 'from-yellow-500 to-orange-600' },
 	{ id: 4, path: '/house-price-estimator', icon: Home, color: 'from-green-500 to-teal-600' },
+	{ id: 5, path: '/uplift-model', icon: ShoppingCart , color: 'from-green-500 to-teal-600' },
 ];
 
 // Helper function to extract pathname from live_url
@@ -33,14 +34,19 @@ export default function MLModelsHomepage() {
 		try {
 			const response = await fetch(`/api/projects`);
 			const fetchedData = await response.json();
+			console.log(fetchedData);
 
+			// ✅ Filter for ML category + skip if live_url is empty, null, or invalid
 			const mlProjects = fetchedData.filter(
-				(project) => project.category === "Machine Learning"
+				(project) =>
+					project.category === "Machine Learning" &&
+					project.live_url &&
+					project.live_url.trim() !== ""
 			);
 
 			const mergedModels = mlProjects.map((fetchedModel) => {
 				const modelPath = extractPath(fetchedModel.live_url);
-				const config = localModelConfig.find(c => c.path === modelPath);
+				const config = localModelConfig.find((c) => c.path === modelPath);
 
 				const accuracyValue = fetchedModel.model_accuracy
 					? `${Math.round(fetchedModel.model_accuracy)}% Accuracy`
@@ -50,7 +56,7 @@ export default function MLModelsHomepage() {
 					? `${Math.round(fetchedModel.model_features)} Features`
 					: 'N/A';
 
-				// ✅ Convert the backend URL into frontend route
+				// ✅ Convert backend URL into frontend route
 				const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
 				const fullFrontendPath = `${baseUrl}${modelPath}`;
 
@@ -60,7 +66,6 @@ export default function MLModelsHomepage() {
 					path: fullFrontendPath,
 					stats: featuresValue,
 					accuracy: accuracyValue,
-
 					id: config?.id || fetchedModel.id,
 					icon: config?.icon || Plus,
 					color: config?.color || 'from-gray-500 to-gray-600',
@@ -134,7 +139,6 @@ export default function MLModelsHomepage() {
 						) : (
 							models.map((model) => {
 								const IconComponent = model.icon || Plus;
-
 								return (
 									<Link href={model.path} key={model.id}>
 										<div
