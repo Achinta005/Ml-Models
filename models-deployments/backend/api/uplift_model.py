@@ -3,22 +3,60 @@ import joblib
 import numpy as np
 import pandas as pd
 import os
+import requests
 
 predict_customer_uplift = Blueprint('predict_customer_uplift', __name__)
 
-# Load models from ../models directory
-model_path = os.path.join(os.path.dirname(__file__), '..', 'models')
+# --- CONFIG ---
+# Google Drive file IDs (replace with yours if needed)
+GOOGLE_DRIVE_ID_TREATED = "1Akl2p0P666rzOf2zGpNZQ9xioZ0ua-oV"
+GOOGLE_DRIVE_ID_CONTROL = "1c8B9K0qDX2gN4kDPKgl1YmhVWvULK7-c"
 
+# Create download URLs
+TREATED_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_ID_TREATED}"
+CONTROL_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_ID_CONTROL}"
+
+# Local cache directory
+MODEL_DIR = os.path.join(os.path.dirname(__file__), '..', 'models')
+os.makedirs(MODEL_DIR, exist_ok=True)
+
+TREATED_MODEL_PATH = os.path.join(MODEL_DIR, 'uplift_t_model.pkl')
+CONTROL_MODEL_PATH = os.path.join(MODEL_DIR, 'uplift_c_model.pkl')
+
+
+# --- FUNCTION TO DOWNLOAD MODEL IF NEEDED ---
+def download_model_if_needed(url, local_path):
+    """Download model file from Google Drive if not cached."""
+    if not os.path.exists(local_path):
+        print(f"⬇️ Downloading {os.path.basename(local_path)} from Google Drive...")
+        response = requests.get(url, stream=True)
+        if response.status_code == 200:
+            with open(local_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+            print(f"✅ {os.path.basename(local_path)} downloaded successfully.")
+        else:
+            print(f"✗ Error downloading {os.path.basename(local_path)} — status code: {response.status_code}")
+            return None
+    return local_path
+
+
+# --- LOAD MODELS ---
 try:
-    model_treated = joblib.load(os.path.join(model_path, 'uplift_t_model.pkl'))
-    model_control = joblib.load(os.path.join(model_path, 'uplift_c_model.pkl'))
-    print("✅ Models loaded successfully: (1) Treated  (2) Control")
+    download_model_if_needed(TREATED_MODEL_URL, TREATED_MODEL_PATH)
+    download_model_if_needed(CONTROL_MODEL_URL, CONTROL_MODEL_PATH)
+
+    model_treated = joblib.load(TREATED_MODEL_PATH)
+    model_control = joblib.load(CONTROL_MODEL_PATH)
+    print("✅ Models loaded successfully: (1) uplift_t_model.pkl  (2) uplift_c_model.pkl")
 except Exception as e:
     print(f"✗ Error loading uplift models: {e}")
     model_treated = None
     model_control = None
 
 
+# --- HELPER FUNCTION ---
 def should_send_ad(uplift_value: float, threshold: float = 0.01) -> str:
     """Determine whether to send an ad based on uplift value."""
     if uplift_value > threshold:
@@ -29,18 +67,19 @@ def should_send_ad(uplift_value: float, threshold: float = 0.01) -> str:
         return "Neutral - no significant effect"
 
 
+# --- PREDICTION ROUTE ---
 @predict_customer_uplift.route('/predict', methods=['POST'])
 def predict_uplift():
     """Predict uplift value and ad decision."""
     try:
-        print("=" * 50)
+        print("=" * 60)
         print("📥 Received POST request to /predict")
 
         # Check if models are available
         if model_treated is None or model_control is None:
             return jsonify({"error": "Models not loaded"}), 500
 
-        # Parse JSON input
+        # Parse input JSON
         data = request.get_json()
         required_fields = [
             'age', 'monthlyIncome', 'tenure', 'engagementScore',
@@ -53,7 +92,7 @@ def predict_uplift():
                 "error": f"Missing fields. Required: {required_fields}"
             }), 400
 
-        # Convert input data safely
+        # Validate and convert inputs
         try:
             input_features = [
                 float(data['age']),
@@ -72,11 +111,11 @@ def predict_uplift():
         except (ValueError, TypeError) as e:
             return jsonify({"error": f"Invalid data type: {str(e)}"}), 400
 
-        # Match feature names used during training (f0 ... f11)
+        # Match training feature names
         feature_names = [f"f{i}" for i in range(len(input_features))]
         input_df = pd.DataFrame([input_features], columns=feature_names)
 
-        # Predict probabilities for treated and control models
+        # Predict uplift
         p_treat = model_treated.predict_proba(input_df)[0, 1]
         p_control = model_control.predict_proba(input_df)[0, 1]
         uplift = p_treat - p_control
@@ -84,7 +123,6 @@ def predict_uplift():
 
         print(f"✅ Prediction complete — Uplift: {uplift:.4f}")
 
-        # Send JSON response
         return jsonify({
             "success": True,
             "treated_probability": round(float(p_treat), 4),

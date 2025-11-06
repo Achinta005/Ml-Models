@@ -1,15 +1,40 @@
 from flask import Blueprint, request, jsonify
-import joblib
+from utils.helpers2 import load_model
+import os
+import requests
 import pandas as pd
 
-# Blueprint
+# --- BLUEPRINT ---
 prediction_customer_churn = Blueprint('prediction_churn', __name__)
 
-# Load model package (all components)
-MODEL_PATH = 'models/customer_churn_prediction.joblib'
+# --- CONFIG ---
+GOOGLE_DRIVE_ID = "1K7_bUT2futcBchMb8MrTdUxyeFUVSCO4"
+MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_ID}"
+LOCAL_MODEL_PATH = "models/customer_churn_prediction.joblib"
 
-try:
-    model_package = joblib.load(MODEL_PATH)
+# --- FUNCTION TO DOWNLOAD MODEL IF NEEDED ---
+def download_model_if_needed(url, local_path):
+    """Download model file from Google Drive if not cached locally."""
+    if not os.path.exists(local_path):
+        print("Downloading customer churn model from Google Drive...")
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+        response = requests.get(url, stream=True)
+        if response.status_code == 200:
+            with open(local_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+            print("Model downloaded successfully.")
+        else:
+            print(f"Error downloading model: status {response.status_code}")
+            return None
+    return local_path
+
+# --- LOAD MODEL ONCE ---
+download_model_if_needed(MODEL_URL, LOCAL_MODEL_PATH)
+model_package = load_model(LOCAL_MODEL_PATH)
+
+if model_package:
     model = model_package['model']
     imputer_num = model_package['imputer_num']
     imputer_cat = model_package['imputer_cat']
@@ -18,38 +43,33 @@ try:
     numerical_cols = model_package['numerical_cols']
     categorical_cols = model_package['categorical_cols']
     encoded_cols = model_package['encoded_cols']
-except Exception as e:
-    model_package = None
-    print(f"Error loading model: {e}")
+else:
+    model = None
 
 
+# --- ROUTES ---
 @prediction_customer_churn.route('/prediction', methods=['POST'])
 def prediction_churn():
     """Predict Customer Churn"""
     try:
-        if model_package is None:
+        if model is None:
             return jsonify({
                 'success': False,
-                'error': 'Model not loaded. Check if customer_churn_prediction.joblib exists.'
+                'error': 'Model not loaded. Check if customer_churn_prediction.joblib exists or Drive ID is valid.'
             }), 500
 
-        # Get JSON data from request
         data = request.get_json()
-
         if not data:
-            return jsonify({
-                'success': False,
-                'error': 'No data provided'
-            }), 400
+            return jsonify({'success': False, 'error': 'No data provided'}), 400
 
-        # Convert to DataFrame
+        # Convert input JSON to DataFrame
         input_df = pd.DataFrame([data])
 
-        # Process numerical columns
+        # Handle missing numeric values and scale
         input_df[numerical_cols] = imputer_num.transform(input_df[numerical_cols])
         input_df[numerical_cols] = scaler.transform(input_df[numerical_cols])
 
-        # Process categorical columns
+        # Handle categorical encoding
         encoded_values = encoder.transform(input_df[categorical_cols])
         encoded_df = pd.DataFrame(encoded_values, columns=encoded_cols)
         input_df = pd.concat([input_df[numerical_cols], encoded_df], axis=1)
@@ -72,21 +92,15 @@ def prediction_churn():
         return jsonify(result), 200
 
     except Exception as e:
-        return jsonify({
-            'success': False,
-            'error': f'Prediction error: {str(e)}'
-        }), 500
+        return jsonify({'success': False, 'error': f'Prediction error: {str(e)}'}), 500
 
 
 @prediction_customer_churn.route('/model-info', methods=['GET'])
 def model_info():
-    """Get information about the loaded model"""
+    """Get model details"""
     try:
         if model_package is None:
-            return jsonify({
-                'success': False,
-                'error': 'Model not loaded'
-            }), 500
+            return jsonify({'success': False, 'error': 'Model not loaded'}), 500
 
         return jsonify({
             'success': True,
@@ -98,10 +112,7 @@ def model_info():
         }), 200
 
     except Exception as e:
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 def get_risk_level(churn_probability):

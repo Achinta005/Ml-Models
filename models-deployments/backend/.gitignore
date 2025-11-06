@@ -19,3 +19,12 @@ Thumbs.db
 
 # Environment
 .env
+
+# Ignore everything inside models/
+models/*
+
+# But keep the folder itself
+!models/
+
+# And optionally keep an empty placeholder (so Git tracks the folder)
+!models/.gitkeep
