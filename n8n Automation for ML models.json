@@ -1,0 +1,473 @@
+{
+  "name": "ML Prediction Workflow (Complete)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ml-agent",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -2576,
+        448
+      ],
+      "id": "a04196bf-a9cb-4f79-8ab1-a2d70ae0dcdb",
+      "name": "Webhook",
+      "webhookId": "ml-prediction-webhook"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"models\": [\n    {\n      \"name\": \"customer churn prediction\",\n      \"url\": \"https://deploy-euyc.onrender.com/customer-churn/prediction\",\n      \"method\": \"POST\",\n      \"inputs\": [\"SeniorCitizen\", \"tenure\", \"MonthlyCharges\", \"TotalCharges\", \"gender\", \"Partner\", \"Dependents\", \"PhoneService\", \"MultipleLines\", \"InternetService\", \"OnlineSecurity\", \"OnlineBackup\", \"DeviceProtection\", \"TechSupport\", \"StreamingTV\", \"StreamingMovies\", \"Contract\", \"PaperlessBilling\", \"PaymentMethod\"],\n      \"input_types\": {\n        \"SeniorCitizen\": \"number\",\n        \"tenure\": \"number\",\n        \"MonthlyCharges\": \"number\",\n        \"TotalCharges\": \"number\",\n        \"gender\": \"string\",\n        \"Partner\": \"string\",\n        \"Dependents\": \"string\",\n        \"PhoneService\": \"string\",\n        \"MultipleLines\": \"string\",\n        \"InternetService\": \"string\",\n        \"OnlineSecurity\": \"string\",\n        \"OnlineBackup\": \"string\",\n        \"DeviceProtection\": \"string\",\n        \"TechSupport\": \"string\",\n        \"StreamingTV\": \"string\",\n        \"StreamingMovies\": \"string\",\n        \"Contract\": \"string\",\n        \"PaperlessBilling\": \"string\",\n        \"PaymentMethod\": \"string\"\n      }\n    },\n    {\n      \"name\": \"heart disease prediction\",\n      \"url\": \"https://deploy-euyc.onrender.com/heart-disease/predict\",\n      \"method\": \"POST\",\n      \"inputs\": [\"Gender\", \"Blood Pressure\", \"Cholesterol Level\", \"Exercise Habits\", \"Smoking\", \"Family Heart Disease\", \"Diabetes\", \"BMI\", \"High Blood Pressure\", \"Low HDL Cholesterol\", \"High LDL Cholesterol\", \"Alcohol Consumption\", \"Stress Level\", \"Sleep Hours\", \"Sugar Consumption\", \"Triglyceride Level\", \"Fasting Blood Sugar\", \"CRP Level\", \"Homocysteine Level\"],\n      \"input_types\": {\n        \"Gender\": \"string\",\n        \"Blood Pressure\": \"number\",\n        \"Cholesterol Level\": \"number\",\n        \"Exercise Habits\": \"string\",\n        \"Smoking\": \"boolean\",\n        \"Family Heart Disease\": \"boolean\",\n        \"Diabetes\": \"boolean\",\n        \"BMI\": \"number\",\n        \"High Blood Pressure\": \"boolean\",\n        \"Low HDL Cholesterol\": \"boolean\",\n        \"High LDL Cholesterol\": \"boolean\",\n        \"Alcohol Consumption\": \"string\",\n        \"Stress Level\": \"number\",\n        \"Sleep Hours\": \"number\",\n        \"Sugar Consumption\": \"string\",\n        \"Triglyceride Level\": \"number\",\n        \"Fasting Blood Sugar\": \"number\",\n        \"CRP Level\": \"number\",\n        \"Homocysteine Level\": \"number\"\n      }\n    },\n    {\n      \"name\": \"medical charge predictor\",\n      \"url\": \"https://deploy-euyc.onrender.com/medical-charge/predict\",\n      \"method\": \"POST\",\n      \"inputs\": [\"age\", \"bmi\", \"children\", \"smoker\", \"sex\", \"region\"],\n      \"input_types\": {\n        \"age\": \"number\",\n        \"bmi\": \"number\",\n        \"children\": \"number\",\n        \"smoker\": \"boolean\",\n        \"sex\": \"string\",\n        \"region\": \"string\"\n      }\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        -2384,
+        448
+      ],
+      "id": "f6fd77f6-ed9d-4049-bcaa-282fd8659d8f",
+      "name": "Model Registry"
+    },
+    {
+      "parameters": {
+        "jsCode": "const webhookInput = $input.first().json;\nconst models = $('Model Registry').first().json.models;\n\nlet modelName = null;\nlet formData = null;\nlet userMessage = null;\n\nif (webhookInput.body) {\n  modelName = webhookInput.body.model_name;\n  formData = webhookInput.body.form_data;\n  userMessage = webhookInput.body.message;\n} else {\n  modelName = webhookInput.model_name;\n  formData = webhookInput.form_data;\n  userMessage = webhookInput.message;\n}\n\nreturn [{\n  json: {\n    model_name: modelName,\n    form_data: formData,\n    user_message: userMessage,\n    models: models\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2176,
+        448
+      ],
+      "id": "ed5ae7ac-f2da-4f2b-8c74-3c085359f58c",
+      "name": "Parse Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.model_name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              },
+              "id": "37710c15-eb86-4b26-b990-bd9f1ee49a1a"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1984,
+        448
+      ],
+      "id": "fbd4709a-2524-4638-a852-73576cfb5d33",
+      "name": "Check Model Selected"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.first().json;\n\n// Validate input\nif (!inputData) {\n  return [{\n    json: {\n      error: true,\n      response: 'No input data received',\n      type: 'error'\n    }\n  }];\n}\n\nconst modelName = inputData.model_name;\nconst formData = inputData.form_data;\nconst models = inputData.models;\n\n// Check if model name exists\nif (!modelName) {\n  return [{\n    json: {\n      error: true,\n      response: 'No model name provided',\n      type: 'error'\n    }\n  }];\n}\n\n// Check if models list exists\nif (!models || !Array.isArray(models)) {\n  return [{\n    json: {\n      error: true,\n      response: 'Models list not found',\n      type: 'error'\n    }\n  }];\n}\n\n// Find the model configuration\nconst modelConfig = models.find(m => \n  m.name.toLowerCase() === modelName.toLowerCase()\n);\n\nif (!modelConfig) {\n  return [{\n    json: {\n      error: true,\n      response: 'Model not found: ' + modelName,\n      type: 'error',\n      available_models: models.map(m => m.name)\n    }\n  }];\n}\n\n// Check if form data is provided\nif (!formData || Object.keys(formData).length === 0) {\n  return [{\n    json: {\n      type: 'form_required',\n      model_name: modelConfig.name,\n      form_schema: {\n        inputs: modelConfig.inputs,\n        input_types: modelConfig.input_types\n      },\n      response: 'Please provide input data for ' + modelConfig.name\n    }\n  }];\n}\n\n// Form data exists, proceed with prediction\nreturn [{\n  json: {\n    has_form_data: true,\n    model_config: modelConfig,\n    form_data: formData\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1776,
+        352
+      ],
+      "id": "ddb91451-280b-440d-ae0f-342cc5347315",
+      "name": "Validate Model"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.has_form_data }}",
+              "rightValue": "form_required",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "id": "aa5a0593-7a9f-408f-91a7-4b06b5b950c4"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1584,
+        352
+      ],
+      "id": "c04d7a72-5efb-4b9f-b7f3-ff3c78b7f5a9",
+      "name": "Has Form Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.first().json;\n\n// Validate input\nif (!inputData) {\n  return [{\n    json: {\n      error: true,\n      response: 'No input data received'\n    }\n  }];\n}\n\nconst modelConfig = inputData.model_config;\nconst formData = inputData.form_data;\n\n// Check if modelConfig exists\nif (!modelConfig) {\n  return [{\n    json: {\n      error: true,\n      response: 'Model configuration missing. Please select a model first.'\n    }\n  }];\n}\n\n// Check if formData exists\nif (!formData) {\n  return [{\n    json: {\n      error: true,\n      response: 'Form data missing. Please fill in the form.'\n    }\n  }];\n}\n\nconst cleanedData = {};\nconst inputs = modelConfig.inputs || [];\nconst inputTypes = modelConfig.input_types || {};\n\n// Process each input field\ninputs.forEach(field => {\n  const value = formData[field];\n  const expectedType = inputTypes[field];\n  \n  if (expectedType === 'number') {\n    cleanedData[field] = parseFloat(value) || 0;\n  } else if (expectedType === 'boolean') {\n    cleanedData[field] = value === true || value === 'true' || value === 'yes' || value === 1;\n  } else {\n    cleanedData[field] = String(value || '');\n  }\n});\n\nreturn [{\n  json: {\n    url: modelConfig.url,\n    method: modelConfig.method,\n    data: cleanedData,\n    model_name: modelConfig.name\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1376,
+        240
+      ],
+      "id": "d1d2e1b1-232c-4716-ba87-89366e4ef764",
+      "name": "Prepare ML Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.data }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1184,
+        240
+      ],
+      "id": "adfa7952-823b-44bc-98d0-0ec20c68e313",
+      "name": "Call ML Model"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prediction = $input.first().json;\nconst requestData = $('Prepare ML Request').first().json;\n\nreturn [{\n  json: {\n    type: 'prediction_result',\n    response: '✅ Prediction completed successfully!',\n    prediction: prediction,\n    model_used: requestData.model_name,\n    success: true\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -976,
+        240
+      ],
+      "id": "87ac6705-2456-491b-9aca-ac555680573c",
+      "name": "Format ML Response"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.first().json;\nconst userMessage = inputData.user_message;\nconst models = inputData.models;\n\nconst systemMsg = 'You are an ML assistant. Available models: ' + models.map(m => m.name).join(', ') + '. Help users understand which model they need. Be brief and helpful.';\n\nreturn [{\n  json: {\n    messages: [\n      { role: 'system', content: systemMsg },\n      { role: 'user', content: userMessage }\n    ]\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1776,
+        544
+      ],
+      "id": "983f7aac-6d0f-440f-b1a0-3c0b8be4bd6f",
+      "name": "Prepare AI Chat"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_PERPLEXITY_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"sonar\",\n  \"messages\": {{ JSON.stringify($json.messages) }},\n  \"temperature\": 0.7,\n  \"max_tokens\": 500\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1584,
+        544
+      ],
+      "id": "57071a62-8489-424f-87dc-d6c9231c9b13",
+      "name": "Call AI"
+    },
+    {
+      "parameters": {
+        "jsCode": "const aiResponse = $input.first().json;\nlet content = 'AI response received';\n\nif (aiResponse.choices && aiResponse.choices[0] && aiResponse.choices[0].message) {\n  content = aiResponse.choices[0].message.content;\n}\n\nreturn [{\n  json: {\n    type: 'ai_chat',\n    response: content,\n    success: true\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1376,
+        544
+      ],
+      "id": "34752ca4-c63e-42d1-9247-eafe4b9861be",
+      "name": "Format AI Response"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -784,
+        448
+      ],
+      "id": "b0fe5f73-c264-4ae4-8610-9f7ede7ae3ea",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        448
+      ],
+      "id": "cdf33478-7481-4749-ac7e-81358c4edd6a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Model Registry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model Registry": {
+      "main": [
+        [
+          {
+            "node": "Parse Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Request": {
+      "main": [
+        [
+          {
+            "node": "Check Model Selected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Model Selected": {
+      "main": [
+        [
+          {
+            "node": "Validate Model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare AI Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Model": {
+      "main": [
+        [
+          {
+            "node": "Has Form Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Form Data": {
+      "main": [
+        [
+          {
+            "node": "Prepare ML Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare ML Request": {
+      "main": [
+        [
+          {
+            "node": "Call ML Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call ML Model": {
+      "main": [
+        [
+          {
+            "node": "Format ML Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format ML Response": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare AI Chat": {
+      "main": [
+        [
+          {
+            "node": "Call AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call AI": {
+      "main": [
+        [
+          {
+            "node": "Format AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format AI Response": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cac8eb7d-184c-4a47-8038-09de6604a28e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ef590ee6467c2c94ce16f1a5904314f7131d9783cc96eec8c342a1ae1aadefef"
+  },
+  "id": "IARJZooomvh9O8TC",
+  "tags": []
+}
