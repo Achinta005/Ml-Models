@@ -9,14 +9,13 @@ app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 
 # Enable CORS
-# Enable CORS for ALL routes from your Vercel domain
 CORS(app, resources={
     r"/*": {
         "origins": [
             "http://localhost:3000",
             "http://localhost:5000",
-            "https://deploy-five-khaki.vercel.app",  # Your Vercel domain
-            "https://*.vercel.app" , # All Vercel preview URLs
+            "https://deploy-five-khaki.vercel.app",
+            "https://*.vercel.app",
             "https://deploy-ten-orcin.vercel.app"
         ],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
@@ -30,13 +29,17 @@ from api.medical_charge_prediction import predict_medical_charge
 app.register_blueprint(predict_medical_charge, url_prefix='/medical-charge')
 
 from api.heart_disease_prediction import prediction_heart_disease
-app.register_blueprint(prediction_heart_disease,url_prefix='/heart-disease')
+app.register_blueprint(prediction_heart_disease, url_prefix='/heart-disease')
 
 from api.customer_churn_prediction import prediction_customer_churn
-app.register_blueprint(prediction_customer_churn,url_prefix='/customer-churn')
+app.register_blueprint(prediction_customer_churn, url_prefix='/customer-churn')
 
 from api.uplift_model import predict_customer_uplift
-app.register_blueprint(predict_customer_uplift,url_prefix='/predict_uplift')
+app.register_blueprint(predict_customer_uplift, url_prefix='/predict_uplift')
+
+# Import backup blueprint
+from api.backup.backup_all_db import backup_blueprint
+app.register_blueprint(backup_blueprint)
 
 @app.route('/')
 def home():
@@ -45,8 +48,11 @@ def home():
         "version": "1.0.0",
         "endpoints": {
             "predict_medical_charge": "/medical-charge/predict",
-            "prediction_heart_disease":"/heart-disease/predict",
-            "prediction_customer_churn":"/customer-churn/prediction",
+            "prediction_heart_disease": "/heart-disease/predict",
+            "prediction_customer_churn": "/customer-churn/prediction",
+            "predict_uplift": "/predict_uplift/predict",
+            "authenticate_drive": "/authenticate-drive",
+            "backup_all_databases": "/backup-all-db",
             "health": "/health"
         }
     }

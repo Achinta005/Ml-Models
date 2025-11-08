@@ -7,3 +7,11 @@ joblib>=1.3.0
 pandas>=2.1.0
 python-dotenv==1.0.0
 requests
+
+fastapi
+uvicorn
+mysql-connector-python
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client

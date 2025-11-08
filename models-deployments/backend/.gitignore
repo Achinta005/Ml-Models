@@ -28,3 +28,7 @@ models/*
 
 # Keep an empty placeholder file (optional)
 !models/.gitkeep
+
+credentials.json
+token.pickle
+service_account.json
