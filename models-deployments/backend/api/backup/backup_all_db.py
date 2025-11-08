@@ -6,6 +6,7 @@ import zipfile
 import datetime
 import shutil
 import pickle
+import json
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -30,27 +31,48 @@ TOKEN_FILE = 'token.pickle'
 CREDENTIALS_FILE = 'credentials.json'
 
 
+def get_credentials_file():
+    """Get credentials from environment variable or file"""
+    # Check if credentials exist as environment variable
+    google_creds = os.getenv('GOOGLE_CREDENTIALS')
+    
+    if google_creds:
+        # Create temporary credentials file from environment variable
+        temp_creds_path = '/tmp/credentials.json'
+        with open(temp_creds_path, 'w') as f:
+            f.write(google_creds)
+        return temp_creds_path
+    
+    # Fall back to local file (for development)
+    if os.path.exists(CREDENTIALS_FILE):
+        return CREDENTIALS_FILE
+    
+    raise Exception(
+        "No credentials found. Set GOOGLE_CREDENTIALS environment variable "
+        "or add credentials.json file."
+    )
+
+
 def get_drive_service():
     """Authenticate and return Google Drive service"""
     creds = None
     
+    # Check for existing token
     if os.path.exists(TOKEN_FILE):
         with open(TOKEN_FILE, 'rb') as token:
             creds = pickle.load(token)
     
+    # If no valid credentials, authenticate
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            if not os.path.exists(CREDENTIALS_FILE):
-                raise Exception(
-                    f"Missing {CREDENTIALS_FILE}. "
-                    "Download OAuth credentials from Google Cloud Console."
-                )
+            credentials_path = get_credentials_file()
             flow = InstalledAppFlow.from_client_secrets_file(
-                CREDENTIALS_FILE, SCOPES)
+                credentials_path, SCOPES)
             creds = flow.run_local_server(port=8080)
         
+        # Save credentials for next run
         with open(TOKEN_FILE, 'wb') as token:
             pickle.dump(creds, token)
     
