@@ -11,9 +11,6 @@ requests
 fastapi
 uvicorn
 mysql-connector-python
-google-auth
-google-auth-oauthlib
-google-auth-httplib2
-google-api-python-client
+setuptools>=65.0.0
 
 b2sdk==1.14.0
