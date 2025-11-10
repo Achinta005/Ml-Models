@@ -16,7 +16,8 @@ CORS(app, resources={
             "http://localhost:3000",
             "https://*.vercel.app",
             "https://deploy-five-khaki.vercel.app",
-            "https://deploy-ten-orcin.vercel.app"
+            "https://deploy-ten-orcin.vercel.app",
+            "https://www.achintahazra.shop"
         ],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "allow_headers": ["Content-Type", "Authorization"],
