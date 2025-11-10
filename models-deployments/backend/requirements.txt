@@ -14,3 +14,4 @@ mysql-connector-python
 setuptools>=65.0.0
 
 b2sdk==1.14.0
+cloudinary
