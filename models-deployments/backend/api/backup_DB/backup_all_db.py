@@ -9,31 +9,19 @@ import logging
 from b2sdk.v1 import InMemoryAccountInfo, B2Api
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
 
 backup_blueprint = Blueprint("backup", __name__)
 
-# Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
-# Environment variables
 TIDB_HOST = os.getenv("TIDB_HOST")
 TIDB_USER = os.getenv("TIDB_USER")
 TIDB_PASSWORD = os.getenv("TIDB_PASSWORD")
 B2_ACCOUNT_ID = os.getenv("B2_ACCOUNT_ID")
 B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
 B2_BUCKET_NAME = os.getenv("B2_BUCKET_NAME")
-
-# Log environment variables (mask sensitive info)
-logger.info("Loaded environment variables:")
-logger.info("TIDB_HOST: %s", TIDB_HOST)
-logger.info("TIDB_USER: %s", TIDB_USER)
-logger.info("TIDB_PASSWORD: %s", "***" + TIDB_PASSWORD[-4:] if TIDB_PASSWORD else None)
-logger.info("B2_ACCOUNT_ID: %s", B2_ACCOUNT_ID)
-logger.info("B2_APPLICATION_KEY: %s", "***" + B2_APPLICATION_KEY[-4:] if B2_APPLICATION_KEY else None)
-logger.info("B2_BUCKET_NAME: %s", B2_BUCKET_NAME)
 
 
 def get_b2_bucket():
@@ -70,7 +58,6 @@ def backup_all_databases():
     try:
         logger.info("Starting backup for host: %s", TIDB_HOST)
 
-        # Create MySQL config file
         with open(config_file, "w") as f:
             f.write("[client]\n")
             f.write(f"host={TIDB_HOST}\n")
@@ -98,12 +85,10 @@ def backup_all_databases():
             if stderr_output:
                 logger.warning("mysqldump warnings: %s", stderr_output)
 
-        # Zip the SQL file
         logger.info("Zipping the SQL backup")
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
             zipf.write(sql_file_path, arcname="all_databases_backup.sql")
 
-        # Upload to Backblaze B2
         bucket = get_b2_bucket()
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         b2_file_name = f"TIDB_Backup_{timestamp}.zip"
@@ -128,6 +113,5 @@ def backup_all_databases():
         logger.exception("Unexpected error during backup")
         return jsonify({"status": "error", "message": str(e)}), 500
     finally:
-        # Cleanup temporary files
         logger.info("Cleaning up temporary files")
         shutil.rmtree(temp_dir, ignore_errors=True)

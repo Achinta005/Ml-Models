@@ -5,11 +5,9 @@ import secrets
 import os
 from datetime import timedelta
 
-# Create Flask app
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 
-# Enable CORS
 CORS(app, resources={
     r"/*": {
         "origins": [
@@ -25,30 +23,6 @@ CORS(app, resources={
     }
 })
 
-
-# SECRET_KEY = os.environ.get('SECRET_KEY')
-# if not SECRET_KEY:
-#     SECRET_KEY = secrets.token_hex(32)
-#     print("⚠️  WARNING: Using auto-generated SECRET_KEY. Set SECRET_KEY in .env for production!")
-
-# app.secret_key = SECRET_KEY
-
-# # Session configuration
-# app.config.update(
-#     SESSION_COOKIE_NAME='portfolio_session',
-#     SESSION_COOKIE_HTTPONLY=True,
-#     SESSION_COOKIE_SAMESITE='Lax',
-#     SESSION_COOKIE_PATH='/',
-#     SESSION_COOKIE_SECURE=False,  # Set to True in production with HTTPS
-#     PERMANENT_SESSION_LIFETIME=timedelta(hours=1)
-# )
-
-# print("=" * 60)
-# print("🔧 Flask Configuration:")
-# print(f"✅ SECRET_KEY configured: {bool(app.secret_key)}")
-# print(f"✅ SECRET_KEY length: {len(app.secret_key)}")
-# print(f"✅ Session cookie: {app.config['SESSION_COOKIE_NAME']}")
-# print("=" * 60)
 
 # --- Machine Learning Routes ---
 from api.Machine_learning.medical_charge_prediction import predict_medical_charge

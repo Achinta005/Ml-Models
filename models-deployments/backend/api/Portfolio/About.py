@@ -12,15 +12,12 @@ def get_skill_data():
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        # Fetch categories
         cursor.execute("SELECT * FROM skills_categories")
         categories = cursor.fetchall()
 
-        # Fetch skills
         cursor.execute("SELECT * FROM individual_skills")
         skills = cursor.fetchall()
 
-        # Merge data
         skills_data = []
         for cat in categories:
             cat_skills = [
@@ -62,7 +59,6 @@ def get_education_data():
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        # ✅ Fetch education data
         cursor.execute("SELECT * FROM education")
         result = cursor.fetchall()
 
@@ -84,7 +80,6 @@ def get_certificates():
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        # ✅ Fetch certificates data
         cursor.execute("SELECT * FROM certifications")
         result = cursor.fetchall()
 
@@ -103,14 +98,11 @@ def get_certificates():
 @About_blueprint.route("/resume", methods=["GET"])
 def download_resume():
     try:
-        # Construct the full file path
         file_path = os.path.join(current_app.root_path, "files", "resume.pdf")
 
-        # Check if file exists
         if not os.path.exists(file_path):
             return {"error": "File not found"}, 404
 
-        # send_file handles content type and attachment headers
         return send_file(
             file_path,
             mimetype="application/pdf",

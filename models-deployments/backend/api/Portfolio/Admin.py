@@ -15,7 +15,6 @@ def summarize_text():
         data = request.get_json()
         text = data.get('text', '').strip() if data else ''
 
-        # Validate text input
         if not text:
             return jsonify({"error": "Text is required"}), 400
 
@@ -24,12 +23,10 @@ def summarize_text():
         if not HF_API_TOKEN:
             return jsonify({"error": "API token not configured"}), 500
 
-        # Hugging Face API endpoint
         url = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
 
-        # Prepare payload
         payload = {
-            "inputs": text[:10000],  # limit length
+            "inputs": text[:10000],
             "parameters": {
                 "max_length": 1024,
                 "min_length": 100,
@@ -42,10 +39,8 @@ def summarize_text():
             "Content-Type": "application/json"
         }
 
-        # Make the request
         response = requests.post(url, headers=headers, json=payload)
 
-        # Handle non-OK responses
         if not response.ok:
             error_text = response.text
             print("Hugging Face API error:", error_text)
@@ -61,10 +56,8 @@ def summarize_text():
                 "details": error_text
             }), response.status_code
 
-        # Parse JSON response
         data = response.json()
 
-        # Handle different possible response formats
         if isinstance(data, list) and len(data) > 0:
             if "summary_text" in data[0]:
                 return jsonify({"summary": data[0]["summary_text"]})
@@ -74,7 +67,7 @@ def summarize_text():
             return jsonify({"summary": data["summary_text"]})
 
         print("Unexpected response format:", data)
-        return jsonify({"summary": text})  # fallback to original text
+        return jsonify({"summary": text}) 
 
     except Exception as e:
         print("API route error:", e)
@@ -92,7 +85,6 @@ def validate_blog_post_data(data):
 def create_blog_post():
     connection = None
     try:
-        # Parse request body
         form_data = request.get_json()
         validate_blog_post_data(form_data)
 
@@ -104,33 +96,27 @@ def create_blog_post():
         read_time = form_data.get('readTime', '5 min')
         slug = form_data.get('slug')
 
-        # Connect to DB
         connection = get_connection()
         cursor = connection.cursor(dictionary=True)
 
-        # Get next post_id
         cursor.execute("SELECT post_id FROM blog_data ORDER BY post_id DESC LIMIT 1")
         last_post = cursor.fetchall()
         next_post_id = last_post[0]['post_id'] + 1 if last_post else 1
 
-        # Generate slug if not provided
         if not slug:
             slug = re.sub(r'[^a-z0-9\s-]', '', title.lower())
             slug = re.sub(r'\s+', '-', slug)
             slug = re.sub(r'-+', '-', slug)
             slug = re.sub(r'^-|-$', '', slug)
 
-        # Check if slug exists
         cursor.execute("SELECT post_id FROM blog_data WHERE slug = %s", (slug,))
         existing_slug = cursor.fetchall()
 
         if existing_slug:
             slug = f"{slug}-{next_post_id}"
 
-        # Convert tags to JSON
         tags_json = json.dumps(tags)
 
-        # Insert blog post
         cursor.execute("""
             INSERT INTO blog_data 
             (post_id, title, content, excerpt, slug, tags, date, readTime, created_at, updated_at)
@@ -181,14 +167,12 @@ def save_ip():
     if not user_id:
         return jsonify({"error": "user_id is required"}), 400
 
-    # Get IP address from headers
     ip_address = request.headers.get("X-Forwarded-For")
     if ip_address:
         ip_address = ip_address.split(",")[0].strip()
     else:
         ip_address = request.headers.get("X-Real-IP")
 
-    # Handle localhost (development)
     if not ip_address or ip_address in ["::1", "127.0.0.1"]:
         try:
             response = requests.get("https://api.ipify.org?format=json")
@@ -203,7 +187,6 @@ def save_ip():
     try:
         cursor = conn.cursor(dictionary=True)
 
-        # Check if IP already exists
         cursor.execute("SELECT user_id FROM ipaddress WHERE ipaddress = %s LIMIT 1", (ip_address,))
         row = cursor.fetchone()
 
@@ -217,7 +200,6 @@ def save_ip():
                 "source": "database"
             }), 200
 
-        # Insert new IP
         cursor.execute(
             "INSERT INTO ipaddress (user_id, ipaddress) VALUES (%s, %s)",
             (user_id, ip_address)

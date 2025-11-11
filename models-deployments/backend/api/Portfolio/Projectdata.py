@@ -37,7 +37,6 @@ cloudinary.config(
 @projects_blueprint.route("/project_uplaod", methods=["POST"])
 def upload_project():
     try:
-        # Extract form fields
         file = request.files.get("image")
         category = request.form.get("category")
         title = request.form.get("title")
@@ -50,7 +49,6 @@ def upload_project():
         if not file:
             return jsonify({"error": "Image is required"}), 400
 
-        # Upload image to Cloudinary
         upload_result = cloudinary.uploader.upload(
             file,
             folder="Uploaded_Images",
@@ -58,7 +56,6 @@ def upload_project():
         )
         image_url = upload_result.get("secure_url")
 
-        # Convert technologies to JSON
         json_technologies = (
             json.dumps(
                 [tech.strip() for tech in technologies.split(",") if tech.strip()]
@@ -67,7 +64,6 @@ def upload_project():
             else "[]"
         )
 
-        # Insert into MySQL
         conn = get_connection()
         cursor = conn.cursor()
         query = """

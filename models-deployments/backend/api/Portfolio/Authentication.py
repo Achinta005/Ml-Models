@@ -70,7 +70,6 @@ def login_user():
         username = data.get('username')
         password = data.get('password')
 
-        # Validate input
         if not username or not password:
             return jsonify({"error": "Username and password are required"}), 400
 
@@ -83,12 +82,10 @@ def login_user():
         if not user:
             return jsonify({"error": "Invalid credentials"}), 401
 
-        # Verify password
         is_match = bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8'))
         if not is_match:
             return jsonify({"error": "Invalid credentials"}), 401
 
-        # Generate JWT token
         secret_key = os.getenv("JWT_SECRET", "your_jwt_secret")
         payload = {
             "id": user["id"],
@@ -140,7 +137,6 @@ def google_oauth_callback():
         return {"error": "Missing authorization code"}, 400
 
     try:
-        # 1️⃣ Exchange code for access token
         token_resp = requests.post(
             "https://oauth2.googleapis.com/token",
             data={
@@ -155,7 +151,6 @@ def google_oauth_callback():
         token_resp.raise_for_status()
         access_token = token_resp.json().get("access_token")
 
-        # 2️⃣ Fetch user info
         user_info_resp = requests.get(
             "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
             headers={"Authorization": f"Bearer {access_token}"}
@@ -165,22 +160,19 @@ def google_oauth_callback():
         print("userdatagoogle:",user_data)
 
         username = user_data.get("name")
-        password = user_data.get("id")  # Using Google ID as password
+        password = user_data.get("id")
         email=user_data.get("email")
         role = "editor"
 
-        # 3️⃣ Check if user exists in MySQL
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM usernames WHERE username = %s LIMIT 1", (username,))
         user = cursor.fetchone()
 
         if user:
-            # Compare passwords
             if not bcrypt.checkpw(password.encode(), user["password"].encode()):
                 return {"error": "Username already exists with a different password"}, 400
         else:
-            # 4️⃣ Create new user
             hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             cursor.execute(
                 "INSERT INTO usernames (username, password, role, version_key, created_at, updated_at,Email) "
@@ -193,14 +185,12 @@ def google_oauth_callback():
         cursor.close()
         conn.close()
 
-        # 5️⃣ Generate JWT token
         token = jwt.encode(
             {"id": user["id"], "username": user["username"], "role": user["role"]},
             os.environ.get("JWT_SECRET", "your_jwt_secret"),
             algorithm="HS256"
         )
 
-        # 6️⃣ Redirect to frontend with token
         redirect_url = f"{os.environ.get('NEXT_PUBLIC_FRONTEND_URL')}/login?token={token}"
         return redirect(redirect_url)
 
@@ -214,14 +204,12 @@ def google_oauth_callback():
 SECRET_KEY = os.getenv("ADMIN_GRANT_KEY", "default_admin_grant_key")
 
 def get_client_ip():
-    # Check headers first
     ip_address = request.headers.get("X-Forwarded-For")
     if ip_address:
         ip_address = ip_address.split(",")[0].strip()
     else:
         ip_address = request.headers.get("X-Real-IP")
 
-    # Fallback for localhost/dev
     if not ip_address or ip_address in ["::1", "127.0.0.1"]:
         try:
             response = requests.get("https://api.ipify.org?format=json", timeout=2)
@@ -239,21 +227,18 @@ def check_access():
 
     conn = None
     cursor = None
-    row = None  # initialize row here
+    row = None
 
     try:
-        # Get DB connection
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        # Check if IP exists in DB
         cursor.execute("SELECT 1 FROM admin_ipaddress WHERE ipaddress = %s LIMIT 1", (ip_address,))
         row = cursor.fetchone()
 
         if not row:
             return jsonify({"allowed": False}), 403
 
-        # IP exists -> generate JWT token valid for 10 minutes
         token = jwt.encode(
             {
                 "purpose": "admin_access",
@@ -270,7 +255,6 @@ def check_access():
         return jsonify({"allowed": False, "error": str(e)}), 500
 
     finally:
-        # Safely close cursor and connection
         if cursor:
             try:
                 cursor.close()
@@ -281,6 +265,3 @@ def check_access():
                 conn.close()
             except Exception as e:
                 print("Error closing connection:", e)
-
-
-    

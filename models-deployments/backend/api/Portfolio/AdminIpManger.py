@@ -70,7 +70,6 @@ def add_ip():
         
         ipaddress = data['ipaddress'].strip()
         
-        # Validate IP format
         if not validate_ip(ipaddress):
             return jsonify({
                 'success': False,
@@ -80,7 +79,6 @@ def add_ip():
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         
-        # Check if IP already exists
         cursor.execute(
             "SELECT id FROM admin_ipaddress WHERE ipaddress = %s",
             (ipaddress,)
@@ -92,7 +90,6 @@ def add_ip():
                 'error': 'IP address already exists'
             }), 409
         
-        # Insert new IP
         cursor.execute(
             "INSERT INTO admin_ipaddress (ipaddress) VALUES (%s)",
             (ipaddress,)
@@ -100,7 +97,6 @@ def add_ip():
         
         conn.commit()
         
-        # Get the inserted record
         cursor.execute(
             "SELECT id, ipaddress, created_at FROM admin_ipaddress WHERE id = %s",
             (cursor.lastrowid,)
@@ -139,7 +135,6 @@ def delete_ip(ip_id):
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         
-        # Check if IP exists
         cursor.execute(
             "SELECT id, ipaddress FROM admin_ipaddress WHERE id = %s",
             (ip_id,)
@@ -153,7 +148,6 @@ def delete_ip(ip_id):
                 'error': 'IP address not found'
             }), 404
         
-        # Delete the IP
         cursor.execute(
             "DELETE FROM admin_ipaddress WHERE id = %s",
             (ip_id,)

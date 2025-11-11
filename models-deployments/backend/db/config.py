@@ -2,10 +2,8 @@ import os
 from mysql.connector import pooling, Error
 from dotenv import load_dotenv
 
-# Load environment variables from .env
 load_dotenv()
 
-# ✅ Database configuration from environment
 dbconfig = {
     "host": os.getenv("TIDB_HOST"),
     "user": os.getenv("TIDB_USER"),
@@ -13,7 +11,6 @@ dbconfig = {
     "database": os.getenv("DB_NAME"),
 }
 
-# ✅ Create a MySQL connection pool (shared across routes)
 try:
     pool_size = int(os.getenv("DB_POOL_SIZE", 5))
     connection_pool = pooling.MySQLConnectionPool(pool_name="portfolio_pool", pool_size=pool_size, **dbconfig)
@@ -23,7 +20,6 @@ except Error as e:
     connection_pool = None
 
 
-# ✅ Helper function to get a connection safely
 def get_connection():
     """
     Returns a connection from the global pool.

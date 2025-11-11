@@ -9,10 +9,6 @@ from urllib.parse import urlencode
 
 AnimeList_bp = Blueprint('AnimeList_bp', __name__)
 
-# ============================================================================
-# ANILIST GRAPHQL QUERIES
-# ============================================================================
-
 ANILIST_QUERY = """
 query ($username: String) {
   MediaListCollection(userName: $username, type: ANIME) {
@@ -68,16 +64,12 @@ query ($search: String) {
 }
 """
 
-# ============================================================================
-# DATABASE SETUP
-# ============================================================================
 
 def create_tables():
     """Create necessary database tables"""
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Anime list table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS anime_list (
             id INT PRIMARY KEY,
@@ -99,7 +91,6 @@ def create_tables():
         )
     """)
     
-    # Anime details table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS anime_details (
             id INT PRIMARY KEY,
@@ -120,7 +111,6 @@ def create_tables():
         )
     """)
     
-    # AniList tokens table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS anilist_tokens (
             username VARCHAR(255) PRIMARY KEY,
@@ -135,9 +125,6 @@ def create_tables():
     conn.commit()
     conn.close()
 
-# ============================================================================
-# HELPER FUNCTIONS
-# ============================================================================
 
 def query_anilist(query, variables=None, token=None):
     """Send a GraphQL request to AniList API"""
@@ -187,7 +174,6 @@ def has_data_changed(username, new_lists):
         (username,)
     )
     existing_rows = cursor.fetchall()
-    # print("Fetched animelist:-",existing_rows)
     conn.close()
 
     if len(new_entries) != len(existing_rows):
@@ -211,7 +197,6 @@ def store_in_database(username, lists):
     conn = get_connection()
     cursor = conn.cursor()
 
-    # Remove old entries for this user
     cursor.execute("DELETE FROM anime_list WHERE username = %s", (username,))
 
     for lst in lists:
@@ -219,7 +204,6 @@ def store_in_database(username, lists):
         for entry in lst.get("entries", []):
             media = entry.get("media", {})
 
-            # Safely format dates
             started = entry.get("startedAt", {})
             completed = entry.get("completedAt", {})
 
@@ -232,7 +216,6 @@ def store_in_database(username, lists):
                 if completed.get("year") else None
             )
 
-            # Insert into anime_list
             cursor.execute("""
                 INSERT INTO anime_list (
                     id, username, media_id, list_name, status, score, progress,
@@ -258,7 +241,6 @@ def store_in_database(username, lists):
                 entry.get("createdAt")
             ))
 
-            # Insert into anime_details (banner_image removed)
             cursor.execute("""
                 INSERT INTO anime_details (
                     id, title_romaji, title_english, title_native,
@@ -348,10 +330,6 @@ def store_anilist_token(username, access_token, refresh_token, expires_in):
     conn.commit()
     conn.close()
 
-# ============================================================================
-# ROUTES - FETCH & SYNC
-# ============================================================================
-
 @AnimeList_bp.route("/anilist/BaseFunction/fetch", methods=["POST"])
 def sync_anilist():
     """Fetch and sync anime list from AniList"""
@@ -409,9 +387,7 @@ def sync_anilist():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-# ============================================================================
-# ROUTES - EXPORT
-# ============================================================================
+
 
 @AnimeList_bp.route("/anilist/BaseFunction/export", methods=["POST"])
 def export_anilist():
@@ -478,9 +454,6 @@ def escape_xml(text):
     return (str(text).replace("&", "&amp;").replace("<", "&lt;")
             .replace(">", "&gt;").replace('"', "&quot;").replace("'", "&apos;"))
 
-# ============================================================================
-# ROUTES - AUTHENTICATION
-# ============================================================================
 
 @AnimeList_bp.route("/Anilist-auth", methods=["GET"])
 def anilist_auth_base():
@@ -525,7 +498,6 @@ def anilist_exchange():
         if not code:
             return jsonify({"error": "Code is required"}), 400
 
-        # Exchange code for token
         response = requests.post("https://anilist.co/api/v2/oauth/token", json={
             "grant_type": "authorization_code",
             "client_id": os.environ.get("ANILIST_CLIENT_ID"),
@@ -542,14 +514,11 @@ def anilist_exchange():
         refresh_token = token_data.get("refresh_token")
         expires_in = token_data.get("expires_in", 31536000)
 
-        # Get username
         user_data = query_anilist("{ Viewer { id name } }", token=access_token)
         username = user_data["Viewer"]["name"]
 
-        # Store token
         store_anilist_token(username, access_token, refresh_token, expires_in)
 
-        # Set cookie
         resp = make_response(jsonify({
             "message": "Authentication successful",
             "username": username
@@ -573,9 +542,6 @@ def check_auth():
     token = request.cookies.get("anilist_token")
     return jsonify({"authenticated": bool(token)}), 200
 
-# ============================================================================
-# ROUTES - MODIFY ANIME LIST
-# ============================================================================
 
 @AnimeList_bp.route("/anilist/modify", methods=["POST", "PUT", "DELETE"])
 def modify_anime():
@@ -587,13 +553,11 @@ def modify_anime():
 
         data = request.get_json()
 
-        # SEARCH
         if request.method == "POST" and data.get("action") == "search":
             query = data.get("query")
             result = query_anilist(SEARCH_ANIME_QUERY, {"search": query}, token)
             return jsonify({"results": result["Page"]["media"]}), 200
-
-        # ADD
+        
         if request.method == "POST" and data.get("action") == "add":
             mutation = """
             mutation ($mediaId: Int, $status: MediaListStatus) {
@@ -609,7 +573,6 @@ def modify_anime():
             result = query_anilist(mutation, variables, token)
             return jsonify(result), 200
 
-        # UPDATE
         if request.method == "PUT":
             mutation = """
             mutation ($mediaId: Int, $status: MediaListStatus, $progress: Int, $score: Int) {
@@ -636,7 +599,6 @@ def modify_anime():
                 variables["progress"] = int(data["progress"])
 
             if data.get("score") is not None:
-                # AniList expects scoreRaw as an integer (0–1000 scale)
                 variables["score"] = int(float(data["score"]) * 10)
 
             result = query_anilist(mutation, variables, token)
@@ -645,7 +607,6 @@ def modify_anime():
 
         # DELETE
         if request.method == "DELETE":
-            # First get the entry ID
             query = """
             query ($mediaId: Int) {
               MediaList(mediaId: $mediaId) {
@@ -666,7 +627,6 @@ def modify_anime():
             result = query_anilist(mutation, {"id": entry_id}, token)
             return jsonify(result), 200
 
-        # If none of the above conditions matched, return a 400 error
         return jsonify({"error": "Invalid request"}), 400
 
     except Exception as e:
