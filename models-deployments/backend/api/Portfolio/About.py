@@ -44,7 +44,6 @@ def get_skill_data():
                 "title": cat["title"],
                 "skills": cat_skills,
             })
-
         return jsonify(skills_data), 200
 
     except Exception as e:

@@ -1,10 +1,11 @@
-from flask import Blueprint, jsonify, request, redirect
+from flask import Blueprint, jsonify, request, redirect,make_response, current_app
 from db.config import get_connection
 from datetime import datetime,timedelta
 import bcrypt
 import jwt
 import os
 import requests
+import datetime
 
 Authentication_blueprint = Blueprint('Authentication_blueprint', __name__)
 
@@ -16,6 +17,7 @@ def register_user():
         username=data.get('username')
         password=data.get('password')
         role=data.get('role','viewer')
+        email=data.get('email')
         
         if not username or not password:
             return jsonify({"error":"Username and Password required"}),400
@@ -33,9 +35,9 @@ def register_user():
         
         cursor.execute("""
             INSERT INTO usernames 
-            (username, password, role, version_key, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, NOW(), NOW())
-        """, (username, hashed_password.decode('utf-8'), role, 0))
+            (username, password, role, version_key, created_at, updated_at,Email)
+            VALUES (%s, %s, %s, %s, NOW(), NOW(),%s)
+        """, (username, hashed_password.decode('utf-8'), role, 0,email))
         connection.commit()
         
         user_id = cursor.lastrowid
@@ -45,8 +47,8 @@ def register_user():
             "username": username,
             "role": role,
             "version_key": 0,
-            "created_at": datetime.now().isoformat(),
-            "updated_at": datetime.now().isoformat()
+            "created_at": datetime.datetime.now().isoformat(),
+            "updated_at": datetime.datetime.now().isoformat()
         }
         
         return jsonify({
@@ -93,7 +95,7 @@ def login_user():
             "id": user["id"],
             "username": user["username"],
             "role": user["role"],
-            "exp": datetime.utcnow() + timedelta(hours=2)
+            "exp": datetime.datetime.utcnow() + timedelta(hours=2)
         }
         token = jwt.encode(payload, secret_key, algorithm="HS256")
 
@@ -161,9 +163,11 @@ def google_oauth_callback():
         )
         user_info_resp.raise_for_status()
         user_data = user_info_resp.json()
+        print("userdatagoogle:",user_data)
 
         username = user_data.get("name")
         password = user_data.get("id")  # Using Google ID as password
+        email=user_data.get("email")
         role = "editor"
 
         # 3️⃣ Check if user exists in MySQL
@@ -180,9 +184,9 @@ def google_oauth_callback():
             # 4️⃣ Create new user
             hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             cursor.execute(
-                "INSERT INTO usernames (username, password, role, version_key, created_at, updated_at) "
-                "VALUES (%s, %s, %s, 0, NOW(), NOW())",
-                (username, hashed_pw, role)
+                "INSERT INTO usernames (username, password, role, version_key, created_at, updated_at,Email) "
+                "VALUES (%s, %s, %s, 0, NOW(), NOW(),%s)",
+                (username, hashed_pw, role,email)
             )
             conn.commit()
             user = {"id": cursor.lastrowid, "username": username, "role": role}
@@ -205,3 +209,60 @@ def google_oauth_callback():
         return {"error": "OAuth failed", "details": str(e)}, 500
     except Exception as e:
         return {"error": "Server error", "details": str(e)}, 500
+
+
+
+SECRET_KEY = os.getenv("ADMIN_GRANT_KEY", "default_admin_grant_key")
+
+def get_client_ip():
+    # Check headers first
+    ip_address = request.headers.get("X-Forwarded-For")
+    if ip_address:
+        ip_address = ip_address.split(",")[0].strip()
+    else:
+        ip_address = request.headers.get("X-Real-IP")
+
+    # Fallback for localhost/dev
+    if not ip_address or ip_address in ["::1", "127.0.0.1"]:
+        try:
+            response = requests.get("https://api.ipify.org?format=json", timeout=2)
+            ip_address = response.json().get("ip")
+        except Exception:
+            ip_address = None
+
+    return ip_address
+
+@Authentication_blueprint.route("/check-access", methods=["POST"])
+def check_access():
+    ip_address = get_client_ip()
+    if not ip_address:
+        return jsonify({"allowed": False, "error": "Unable to detect IP"}), 400
+
+    conn = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        # Check if IP exists in DB
+        cursor.execute("SELECT 1 FROM admin_ipaddress WHERE ipaddress = %s LIMIT 1", (ip_address,))
+        row = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        if not row:
+            return jsonify({"allowed": False}), 403
+
+        # IP exists -> generate JWT token valid for 10 minutes
+        token = jwt.encode({
+            "purpose": "admin_access",
+            "ip": ip_address,
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+        }, SECRET_KEY, algorithm="HS256")
+
+        return jsonify({"allowed": True, "token": token, "expires_in": 600})
+
+    except Exception as e:
+        if conn:
+            conn.close()
+        return jsonify({"allowed": False, "error": str(e)}), 500
+    
