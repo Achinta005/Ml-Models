@@ -5,7 +5,6 @@ import bcrypt
 import jwt
 import os
 import requests
-import datetime
 
 Authentication_blueprint = Blueprint('Authentication_blueprint', __name__)
 
@@ -47,8 +46,8 @@ def register_user():
             "username": username,
             "role": role,
             "version_key": 0,
-            "created_at": datetime.datetime.now().isoformat(),
-            "updated_at": datetime.datetime.now().isoformat()
+            "created_at": datetime.now().isoformat(),
+            "updated_at": datetime.now().isoformat()
         }
         
         return jsonify({
@@ -95,7 +94,7 @@ def login_user():
             "id": user["id"],
             "username": user["username"],
             "role": user["role"],
-            "exp": datetime.datetime.utcnow() + timedelta(hours=2)
+            "exp": datetime.utcnow() + timedelta(hours=2)
         }
         token = jwt.encode(payload, secret_key, algorithm="HS256")
 
@@ -239,30 +238,49 @@ def check_access():
         return jsonify({"allowed": False, "error": "Unable to detect IP"}), 400
 
     conn = None
+    cursor = None
+    row = None  # initialize row here
+
     try:
+        # Get DB connection
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
         # Check if IP exists in DB
         cursor.execute("SELECT 1 FROM admin_ipaddress WHERE ipaddress = %s LIMIT 1", (ip_address,))
         row = cursor.fetchone()
-        cursor.close()
-        conn.close()
 
         if not row:
             return jsonify({"allowed": False}), 403
 
         # IP exists -> generate JWT token valid for 10 minutes
-        token = jwt.encode({
-            "purpose": "admin_access",
-            "ip": ip_address,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
-        }, SECRET_KEY, algorithm="HS256")
+        token = jwt.encode(
+            {
+                "purpose": "admin_access",
+                "ip": ip_address,
+                "exp": datetime.utcnow() + timedelta(minutes=10)
+            },
+            SECRET_KEY,
+            algorithm="HS256"
+        )
 
         return jsonify({"allowed": True, "token": token, "expires_in": 600})
 
     except Exception as e:
-        if conn:
-            conn.close()
         return jsonify({"allowed": False, "error": str(e)}), 500
+
+    finally:
+        # Safely close cursor and connection
+        if cursor:
+            try:
+                cursor.close()
+            except Exception as e:
+                print("Error closing cursor:", e)
+        if conn:
+            try:
+                conn.close()
+            except Exception as e:
+                print("Error closing connection:", e)
+
+
     
