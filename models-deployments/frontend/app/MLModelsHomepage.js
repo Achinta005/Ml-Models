@@ -17,7 +17,7 @@ const localModelConfig = [
 const extractPath = (url) => {
 	try {
 		const urlObject = new URL(url);
-		return urlObject.pathname; // e.g., "/heart-disease-prediction"
+		return urlObject.pathname;
 	} catch (e) {
 		console.error("Invalid URL in live_url:", url, e);
 		return url;
