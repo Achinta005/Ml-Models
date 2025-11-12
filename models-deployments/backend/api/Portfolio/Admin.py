@@ -220,6 +220,30 @@ def save_ip():
         print("Database operation failed:", e)
         return jsonify({"error": "Database operation failed"}), 500
 
+@Admin_blueprint.route("/get-ip", methods=["GET"])
+def get_only_ip():
+    ip_address = request.headers.get("X-Forwarded-For")
+    if ip_address:
+        ip_address = ip_address.split(",")[0].strip()
+    else:
+        ip_address = request.headers.get("X-Real-IP")
+
+    if not ip_address:
+        ip_address = request.remote_addr
+
+    if ip_address in ["::1", "127.0.0.1"]:
+        try:
+            response = requests.get("https://api.ipify.org?format=json", timeout=3)
+            ip_address = response.json().get("ip")
+            source = "external (ipify.org)"
+        except Exception:
+            return jsonify({"error": "Unable to detect public IP", "source": "localhost"}), 500
+    else:
+        source = "request headers or remote_addr"
+
+    return jsonify({"IP": ip_address, "source": source})
+
+
 @Admin_blueprint.route("/view-ip", methods=["GET"])
 def get_ip_addresses():
     connection = None
