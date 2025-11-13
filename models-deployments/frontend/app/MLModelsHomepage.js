@@ -32,7 +32,7 @@ export default function MLModelsHomepage() {
 	const fetchAndMergeModels = async () => {
 		setIsLoading(true);
 		try {
-			const response = await fetch(`/api/projects`);
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_PYTHON_ML_SERVER}/portfolio/project/projects_data`);
 			const fetchedData = await response.json();
 			console.log(fetchedData);
 
