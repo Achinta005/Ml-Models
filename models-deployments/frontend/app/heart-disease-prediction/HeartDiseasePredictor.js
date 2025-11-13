@@ -38,7 +38,7 @@ export default function HeartDiseasePredictor() {
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
-        const response = await fetch('/api/health_check');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_PYTHON_ML_SERVER}/health`);
         if (response.ok) {
           setApiStatus('✅ Connected (Heart Disease API)');
           setStatusColor('text-green-600');
@@ -72,7 +72,7 @@ export default function HeartDiseasePredictor() {
     console.log(formData)
 
     try {
-      const response = await fetch('/api/heart_disease', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PYTHON_ML_SERVER}/heart-disease/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

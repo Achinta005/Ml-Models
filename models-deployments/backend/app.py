@@ -36,45 +36,11 @@ app.register_blueprint(predict_medical_charge, url_prefix='/medical-charge')
 app.register_blueprint(prediction_heart_disease, url_prefix='/heart-disease')
 app.register_blueprint(prediction_customer_churn, url_prefix='/customer-churn')
 app.register_blueprint(predict_customer_uplift, url_prefix='/predict_uplift')
-
-# ---------------------- Portfolio Routes ------------------------------
-# Admin
-from api.Portfolio.Admin import Admin_blueprint
-from api.Portfolio.AdminIpManger import ip_routes
-# Authentication
-from api.Portfolio.Authentication import Authentication_blueprint
-# AnimeList
-from api.Portfolio.AnimeList import AnimeList_bp
-# About
-from api.Portfolio.About import About_blueprint
-# Projects 
-from api.Portfolio.Projectdata import projects_blueprint
-# Blog 
-from api.Portfolio.Blogdata import blog_blueprint
-# Contact
-from api.Portfolio.Contact import contact_bp
-# -------------------- Register Portfolio blueprints ------------------------
-# Admin
-app.register_blueprint(Admin_blueprint)
-app.register_blueprint(ip_routes)
-# Authentication
-app.register_blueprint(Authentication_blueprint)
-# AnimeList
-app.register_blueprint(AnimeList_bp)
-# About 
-app.register_blueprint(About_blueprint)
-# Projects 
-app.register_blueprint(projects_blueprint)
-# Blog 
-app.register_blueprint(blog_blueprint)
-# Contact
-app.register_blueprint(contact_bp)
-
 app.register_blueprint(backup_blueprint)
 
 @app.route('/')
 def home():
-    return {"message": "Machine Learning Models API with Portfolio", "version": "1.1.0"}
+    return {"message": "Machine Learning Models API", "version": "1.1.0"}
 
 @app.route('/health')
 def health():

@@ -93,33 +93,3 @@ def prediction_churn():
 
     except Exception as e:
         return jsonify({'success': False, 'error': f'Prediction error: {str(e)}'}), 500
-
-
-@prediction_customer_churn.route('/model-info', methods=['GET'])
-def model_info():
-    """Get model details"""
-    try:
-        if model_package is None:
-            return jsonify({'success': False, 'error': 'Model not loaded'}), 500
-
-        return jsonify({
-            'success': True,
-            'model_type': str(type(model)).split("'")[1],
-            'numeric_features': numerical_cols,
-            'categorical_features': categorical_cols,
-            'encoded_features': encoded_cols,
-            'total_features': len(numerical_cols) + len(encoded_cols)
-        }), 200
-
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-def get_risk_level(churn_probability):
-    """Determine churn risk level"""
-    if churn_probability < 0.3:
-        return 'Low'
-    elif churn_probability < 0.6:
-        return 'Medium'
-    else:
-        return 'High'

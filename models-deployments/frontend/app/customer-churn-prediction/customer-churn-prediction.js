@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { AlertCircle, CheckCircle, Loader,Home } from "lucide-react";
+import { AlertCircle, CheckCircle, Loader, Home } from "lucide-react";
 
 export default function ChurnPredictionPage() {
   const [formData, setFormData] = useState({
@@ -121,7 +121,7 @@ export default function ChurnPredictionPage() {
     const checkApiStatus = async () => {
       try {
         const response = await fetch(
-          `api/health_check`
+          `${process.env.NEXT_PUBLIC_API_PYTHON_ML_SERVER}/health`
         );
         if (response.ok) {
           setApiStatus("✅ Connected (Customer-churn-predictor API)");
@@ -158,10 +158,10 @@ export default function ChurnPredictionPage() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-console.log(formData)
+    console.log(formData);
     try {
       const response = await fetch(
-        `/api/customer_churn`,
+        `${process.env.NEXT_PUBLIC_API_PYTHON_ML_SERVER}/customer-churn/prediction`,
         {
           method: "POST",
           headers: {
@@ -715,7 +715,8 @@ console.log(formData)
             {!result && !error && (
               <div className="bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg p-6 text-center">
                 <p className="text-slate-600 text-sm">
-                  Fill the form and click &quot;Predict Churn&quot; to see results
+                  Fill the form and click &quot;Predict Churn&quot; to see
+                  results
                 </p>
               </div>
             )}
