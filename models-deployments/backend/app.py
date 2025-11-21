@@ -30,6 +30,7 @@ from api.Machine_learning.heart_disease_prediction import prediction_heart_disea
 from api.Machine_learning.customer_churn_prediction import prediction_customer_churn
 from api.Machine_learning.uplift_model import predict_customer_uplift
 from api.backup_DB.backup_all_db import backup_blueprint
+from api.leaf_predict import predict_leaf_name
 
 # --- Register Machine Learning blueprints ---
 app.register_blueprint(predict_medical_charge, url_prefix='/medical-charge')
@@ -37,6 +38,7 @@ app.register_blueprint(prediction_heart_disease, url_prefix='/heart-disease')
 app.register_blueprint(prediction_customer_churn, url_prefix='/customer-churn')
 app.register_blueprint(predict_customer_uplift, url_prefix='/predict_uplift')
 app.register_blueprint(backup_blueprint)
+app.register_blueprint(predict_leaf_name)
 
 @app.route('/')
 def home():
