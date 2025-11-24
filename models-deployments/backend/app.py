@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from config import DevelopmentConfig
 import secrets
 import os
 from datetime import timedelta
+import time
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
@@ -44,9 +45,13 @@ app.register_blueprint(predict_leaf_name)
 def home():
     return {"message": "Machine Learning Models API", "version": "1.1.0"}
 
-@app.route('/health')
+@app.route("/health")
 def health():
-    return {"status": "healthy"}
+    return jsonify({
+        "status": "ok",
+        "uptime": time.time(),
+        "timestamp": int(time.time() * 1000)
+    }), 200
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5000)
