@@ -16,7 +16,8 @@ CORS(app, resources={
             "https://*.vercel.app",
             "https://deploy-five-khaki.vercel.app",
             "https://deploy-ten-orcin.vercel.app",
-            "https://www.achintahazra.shop"
+            "https://www.achintahazra.shop",
+            "https://appsy-ivory.vercel.app"
         ],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "allow_headers": ["Content-Type", "Authorization", "x-grant-key"],
