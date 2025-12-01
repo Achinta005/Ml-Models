@@ -17,11 +17,8 @@ TREATED_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRI
 CONTROL_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_ID_CONTROL}"
 
 # Local cache directory
-MODEL_DIR = os.path.join(os.path.dirname(__file__), '..', 'models')
-os.makedirs(MODEL_DIR, exist_ok=True)
-
-TREATED_MODEL_PATH = os.path.join(MODEL_DIR, 'uplift_t_model.pkl')
-CONTROL_MODEL_PATH = os.path.join(MODEL_DIR, 'uplift_c_model.pkl')
+TREATED_MODEL_PATH = "models/uplift_t_model.pkl"
+CONTROL_MODEL_PATH = "models/uplift_c_model.pkl"
 
 
 # --- FUNCTION TO DOWNLOAD MODEL IF NEEDED ---

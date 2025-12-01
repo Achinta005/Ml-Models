@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Heart, Activity, TrendingUp, Plus, ArrowRight, UserSearch, Home,ShoppingCart  } from 'lucide-react';
+import { Heart, Activity, TrendingUp, Plus, ArrowRight, UserSearch, Home, ShoppingCart } from 'lucide-react';
 
 // Local static model configuration (optional custom colors/icons)
 const localModelConfig = [
@@ -10,7 +10,7 @@ const localModelConfig = [
 	{ id: 2, path: '/heart-disease-prediction', icon: Heart, color: 'from-red-500 to-pink-600' },
 	{ id: 3, path: '/customer-churn-prediction', icon: UserSearch, color: 'from-yellow-500 to-orange-600' },
 	{ id: 4, path: '/house-price-estimator', icon: Home, color: 'from-green-500 to-teal-600' },
-	{ id: 5, path: '/uplift-model', icon: ShoppingCart , color: 'from-green-500 to-teal-600' },
+	{ id: 5, path: '/uplift-model', icon: ShoppingCart, color: 'from-green-500 to-teal-600' },
 ];
 
 // Helper function to extract pathname from live_url
@@ -24,55 +24,125 @@ const extractPath = (url) => {
 	}
 };
 
+// Helper function to compare two arrays deeply
+const areArraysEqual = (arr1, arr2) => {
+	if (!arr1 || !arr2) return false;
+	if (arr1.length !== arr2.length) return false;
+	return JSON.stringify(arr1) === JSON.stringify(arr2);
+};
+
+// Helper function to load cached data from localStorage
+const loadCachedData = () => {
+	try {
+		const cached = localStorage.getItem('ml_models_cache');
+		if (cached) {
+			return JSON.parse(cached);
+		}
+		return null;
+	} catch (error) {
+		console.error("Error loading cached data:", error);
+		return null;
+	}
+};
+
+// Helper function to save data to localStorage
+const saveCachedData = (data) => {
+	try {
+		localStorage.setItem('ml_models_cache', JSON.stringify(data));
+		return true;
+	} catch (error) {
+		console.error("Error saving cached data:", error);
+		return false;
+	}
+};
+
 export default function MLModelsHomepage() {
 	const [hoveredCard, setHoveredCard] = useState(null);
 	const [models, setModels] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
+	const processModels = (fetchedData) => {
+		// Filter for ML category + skip if live_url is empty, null, or invalid
+		const mlProjects = fetchedData.filter(
+			(project) =>
+				project.category === "Machine Learning" &&
+				project.live_url &&
+				project.live_url.trim() !== ""
+		);
+
+		const mergedModels = mlProjects.map((fetchedModel) => {
+			const modelPath = extractPath(fetchedModel.live_url);
+			const config = localModelConfig.find((c) => c.path === modelPath);
+
+			const accuracyValue = fetchedModel.model_accuracy
+				? `${Math.round(fetchedModel.model_accuracy)}% Accuracy`
+				: 'N/A';
+
+			const featuresValue = fetchedModel.model_features
+				? `${Math.round(fetchedModel.model_features)} Features`
+				: 'N/A';
+
+			// Convert backend URL into frontend route
+			const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+			const fullFrontendPath = `${baseUrl}${modelPath}`;
+
+			return {
+				name: fetchedModel.title,
+				description: fetchedModel.description,
+				path: fullFrontendPath,
+				stats: featuresValue,
+				accuracy: accuracyValue,
+				id: config?.id || fetchedModel.id,
+				icon: config?.icon || Plus,
+				color: config?.color || 'from-gray-500 to-gray-600',
+			};
+		});
+
+		return mergedModels;
+	};
+
 	const fetchAndMergeModels = async () => {
 		setIsLoading(true);
 		try {
+			// Step 1: Try to load cached data first
+			const cachedData = loadCachedData();
+			
+			if (cachedData) {
+				console.log("Loading from localStorage cache...");
+				// Process and display cached data immediately
+				const processedModels = processModels(cachedData);
+				setModels(processedModels);
+				setIsLoading(false);
+			}
+
+			// Step 2: Fetch fresh data from API
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_PORTFOLIO_SERVER}/project/projects_data`);
-			const fetchedData = await response.json();
-			console.log(fetchedData);
+			const Data = await response.json();
+			const fetchedData = Data.data;
+			console.log("Fetched data from API:", fetchedData);
 
-			// ✅ Filter for ML category + skip if live_url is empty, null, or invalid
-			const mlProjects = fetchedData.filter(
-				(project) =>
-					project.category === "Machine Learning" &&
-					project.live_url &&
-					project.live_url.trim() !== ""
-			);
-
-			const mergedModels = mlProjects.map((fetchedModel) => {
-				const modelPath = extractPath(fetchedModel.live_url);
-				const config = localModelConfig.find((c) => c.path === modelPath);
-
-				const accuracyValue = fetchedModel.model_accuracy
-					? `${Math.round(fetchedModel.model_accuracy)}% Accuracy`
-					: 'N/A';
-
-				const featuresValue = fetchedModel.model_features
-					? `${Math.round(fetchedModel.model_features)} Features`
-					: 'N/A';
-
-				// ✅ Convert backend URL into frontend route
-				const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-				const fullFrontendPath = `${baseUrl}${modelPath}`;
-
-				return {
-					name: fetchedModel.title,
-					description: fetchedModel.description,
-					path: fullFrontendPath,
-					stats: featuresValue,
-					accuracy: accuracyValue,
-					id: config?.id || fetchedModel.id,
-					icon: config?.icon || Plus,
-					color: config?.color || 'from-gray-500 to-gray-600',
-				};
-			});
-
-			setModels(mergedModels);
+			// Step 3: Compare with cached data
+			if (cachedData) {
+				const hasChanges = !areArraysEqual(cachedData, fetchedData);
+				
+				if (hasChanges) {
+					console.log("Changes detected! Updating localStorage and reloading...");
+					// Save new data to localStorage
+					saveCachedData(fetchedData);
+					// Reload the page to reflect changes
+					window.location.reload();
+					return;
+				} else {
+					console.log("No changes detected. Using cached data.");
+					return;
+				}
+			} else {
+				// No cache exists, save the fetched data
+				console.log("No cache found. Saving fetched data to localStorage...");
+				saveCachedData(fetchedData);
+				const processedModels = processModels(fetchedData);
+				setModels(processedModels);
+			}
 		} catch (error) {
 			console.error("Error fetching or merging model data:", error);
 			setModels([]);

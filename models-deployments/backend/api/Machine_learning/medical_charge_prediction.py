@@ -12,8 +12,8 @@ GOOGLE_DRIVE_ID_SMOKER = "1vhoNvvpkGJ6pYasbDFU7I_3lJcYtkqhh"
 GOOGLE_DRIVE_ID_NON_SMOKER = "173fNtLdFvlwPK5R1y0RB3doV5PX9nFbb"
 
 MODEL_DIR = os.path.join(os.path.dirname(__file__), '..', 'models')
-SMOKER_MODEL_PATH = os.path.join(MODEL_DIR, 'smoker_model.pkl')
-NON_SMOKER_MODEL_PATH = os.path.join(MODEL_DIR, 'non_smoker_model.pkl')
+SMOKER_MODEL_PATH = "models/smoker_model.pkl"
+NON_SMOKER_MODEL_PATH = "models/non_smoker_model.pkl"
 
 SMOKER_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_ID_SMOKER}"
 NON_SMOKER_MODEL_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_ID_NON_SMOKER}"
