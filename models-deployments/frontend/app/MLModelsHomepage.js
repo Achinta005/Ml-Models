@@ -66,12 +66,12 @@ export default function MLModelsHomepage() {
 		const mlProjects = fetchedData.filter(
 			(project) =>
 				project.category === "Machine Learning" &&
-				project.live_url &&
-				project.live_url.trim() !== ""
+				project.liveUrl &&
+				project.liveUrl.trim() !== ""
 		);
 
 		const mergedModels = mlProjects.map((fetchedModel) => {
-			const modelPath = extractPath(fetchedModel.live_url);
+			const modelPath = extractPath(fetchedModel.liveUrl);
 			const config = localModelConfig.find((c) => c.path === modelPath);
 
 			const accuracyValue = fetchedModel.model_accuracy
@@ -85,7 +85,7 @@ export default function MLModelsHomepage() {
 			// Convert backend URL into frontend route
 			const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
 			const fullFrontendPath = `${baseUrl}${modelPath}`;
-
+			
 			return {
 				name: fetchedModel.title,
 				description: fetchedModel.description,
@@ -95,6 +95,7 @@ export default function MLModelsHomepage() {
 				id: config?.id || fetchedModel.id,
 				icon: config?.icon || Plus,
 				color: config?.color || 'from-gray-500 to-gray-600',
+				fetched:fetchedModel,
 			};
 		});
 
