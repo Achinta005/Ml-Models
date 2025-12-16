@@ -74,12 +74,12 @@ export default function MLModelsHomepage() {
 			const modelPath = extractPath(fetchedModel.liveUrl);
 			const config = localModelConfig.find((c) => c.path === modelPath);
 
-			const accuracyValue = fetchedModel.model_accuracy
-				? `${Math.round(fetchedModel.model_accuracy)}% Accuracy`
+			const accuracyValue = fetchedModel.modelAccuracy
+				? `${Math.round(fetchedModel.modelAccuracy)}% Accuracy`
 				: 'N/A';
 
-			const featuresValue = fetchedModel.model_features
-				? `${Math.round(fetchedModel.model_features)} Features`
+			const featuresValue = fetchedModel.modelFeatures
+				? `${Math.round(fetchedModel.modelFeatures)} Features`
 				: 'N/A';
 
 			// Convert backend URL into frontend route
