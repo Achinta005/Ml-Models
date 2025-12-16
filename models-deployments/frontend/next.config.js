@@ -4,10 +4,6 @@ const nextConfig = {
   poweredByHeader: false,
   eslint: {
     ignoreDuringBuilds: true
-  },
-  experimental: {
-    serverActions: false,
-    ppr: false
   }
 };
 
