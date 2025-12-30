@@ -26,5 +26,5 @@ jobs:
           file: ./models-deployments/backend/Dockerfile
           push: true
           tags: |
-            achinta005/Fast_ML_server:latest
-            achinta005/Fast_ML_server:${{ github.sha }}
+            achinta005/fast_ml_server:latest
+            achinta005/fast_ml_server:${{ github.sha }}
