@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push Docker Image & Deploy to Render
 
 on:
   push:
@@ -28,3 +28,10 @@ jobs:
           tags: |
             achinta005/fast_ml_server:latest
             achinta005/fast_ml_server:${{ github.sha }}
+
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
