@@ -1,18 +1,11 @@
-# --- FastAPI stack ---
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 gunicorn==21.2.0
-
-# --- Config & validation ---
 pydantic==2.12.3
 pydantic-settings==2.10.1
-
-# --- Data & ML (PINNED - CRITICAL) ---
 numpy==1.26.4
 pandas==2.1.4
 scikit-learn==1.7.1
 joblib==1.5.2
-
-# --- Utilities ---
 requests==2.31.0
 python-multipart==0.0.6
