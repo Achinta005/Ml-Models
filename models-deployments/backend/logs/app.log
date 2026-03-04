@@ -2367,3 +2367,719 @@
 {"timestamp": "2025-12-30T15:48:35.916927", "level": "INFO", "logger": "root", "message": "Heart disease prediction result: 0", "module": "heart_disease", "function": "predict_heart_disease", "line": 58}
 {"timestamp": "2025-12-30T15:48:35.916927", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "4bc7422b-8f9f-429a-a403-802d3ecc5517", "method": "POST", "path": "/heart-disease/predict", "status_code": 200, "duration_ms": 50.78}
 {"timestamp": "2025-12-30T15:50:05.767979", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-02-13T15:27:29.619605", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-02-13T15:27:29.620619", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-02-13T15:27:29.621612", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-02-13T15:27:29.621612", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-02-13T15:27:29.622603", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-02-13T15:27:29.622603", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-02-13T15:27:32.627248", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-02-13T15:27:32.627248", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-02-13T15:27:32.718350", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-02-13T15:27:32.718350", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-02-13T15:27:32.930430", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-02-13T15:27:32.931418", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-02-13T15:27:33.006618", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-02-13T15:27:33.007607", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-02-13T15:27:33.070741", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-02-13T15:27:33.071703", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-02-13T15:27:33.071703", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-02-13T15:29:33.435046", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "5f9f59fc-5417-4f2a-b5bb-611898e32215", "method": "GET", "path": "/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-02-13T15:29:33.438013", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "5f9f59fc-5417-4f2a-b5bb-611898e32215", "method": "GET", "path": "/health", "status_code": 200, "duration_ms": 1.97}
+{"timestamp": "2026-02-13T15:29:33.849384", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "1f3f5306-b6e2-4cbc-b974-71f39095e66f", "method": "GET", "path": "/favicon.ico", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-02-13T15:29:33.850387", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "1f3f5306-b6e2-4cbc-b974-71f39095e66f", "method": "GET", "path": "/favicon.ico", "status_code": 404, "duration_ms": 1.0}
+{"timestamp": "2026-02-13T15:30:00.046652", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "757f2e80-ebc5-498d-a125-1a68c4f2ac25", "method": "GET", "path": "/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-02-13T15:30:00.048772", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "757f2e80-ebc5-498d-a125-1a68c4f2ac25", "method": "GET", "path": "/health", "status_code": 200, "duration_ms": 1.01}
+{"timestamp": "2026-02-13T15:32:01.023692", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:28:13.615660", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:14.835421", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:28:14.835421", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:28:14.835421", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:28:14.835421", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:28:14.836419", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:14.836419", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:14.897091", "level": "INFO", "logger": "watchfiles.main", "message": "6 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:15.308862", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:15.626319", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:28:15.627312", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:15.713077", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:28:15.713077", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:15.722586", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:15.867831", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:28:15.867831", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:15.942536", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:28:15.943586", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:16.029071", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:28:16.029071", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:28:16.030077", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:28:16.125038", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:16.534423", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:17.031381", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:17.442635", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:17.882599", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:18.245987", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:18.651520", "level": "INFO", "logger": "watchfiles.main", "message": "2 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:18.876669", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:28:19.514770", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:19.873803", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:20.239815", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:20.595049", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:20.932550", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:28:20.932550", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:28:20.932550", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:28:20.932550", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:28:20.932550", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:20.932550", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:20.979459", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:21.344087", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:21.709186", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:21.810597", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:28:21.810597", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:21.850738", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:28:21.850738", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:22.001515", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:28:22.002507", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:22.082141", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:28:22.082708", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:28:22.083707", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:22.156706", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:28:22.156706", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:28:22.156706", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:28:22.442785", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:22.895924", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:23.347011", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:23.787360", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:24.225780", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:24.647119", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:25.120496", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:25.565241", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:26.005729", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:26.396429", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:26.763626", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:27.205305", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:27.616445", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:28.022202", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:28.429970", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:28.800136", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:29.210653", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:29.620087", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:30.037044", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:30.446505", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:30.858965", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:31.231460", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:31.693189", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:32.060748", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:32.477744", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:32.887891", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:33.378512", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:33.744076", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:34.149396", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:34.559122", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:34.975051", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:35.381274", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:35.790759", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:36.208762", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:36.614882", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:37.024568", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:37.547955", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:37.967288", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:38.396589", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:38.816203", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:39.169228", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:39.584901", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:40.000419", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:40.407490", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:40.812236", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:41.239627", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:41.607886", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:42.014626", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:42.425993", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:42.844127", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:43.256902", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:43.674172", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:44.079548", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:44.482766", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:44.890517", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:45.295821", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:45.664195", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:46.119314", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:46.555269", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:46.915606", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:47.355226", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:47.724001", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:48.111150", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:48.533394", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:48.945192", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:49.351367", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:49.760604", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:50.168470", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:50.537024", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:50.947988", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:51.357434", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:51.768667", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:52.176258", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:52.581061", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:52.991900", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:53.393944", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:53.803650", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:54.222301", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:54.618762", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:55.047451", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:55.465471", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:55.879230", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:56.259510", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:56.696996", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:57.064963", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:57.481104", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:57.897828", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:58.305525", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:58.723284", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:59.128241", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:59.533355", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:28:59.943429", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:00.310138", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:00.722344", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:01.140470", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:01.543871", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:01.951057", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:02.356130", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:02.760814", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:03.174151", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:03.598613", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:03.954714", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:04.416723", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:04.817825", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:05.237080", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:05.608322", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:06.020655", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:06.430081", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:06.837911", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:07.241291", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:07.642173", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:08.056409", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:08.519770", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:08.936949", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:09.338461", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:09.745543", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:10.162982", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:10.585931", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:10.980059", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:11.385304", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:11.815559", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:12.227421", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:12.583813", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:13.016227", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:13.429442", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:13.827047", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:14.235509", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:14.644321", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:15.006017", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:15.517178", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:15.942822", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:16.377854", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:16.767074", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:16.822192", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "f00164ee-ac8f-4ae2-bb7e-af9a4328a0b9", "method": "GET", "path": "/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:29:16.824191", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "f00164ee-ac8f-4ae2-bb7e-af9a4328a0b9", "method": "GET", "path": "/health", "status_code": 200, "duration_ms": 1.0}
+{"timestamp": "2026-03-04T06:29:17.136649", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:17.610702", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:18.026548", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:18.446081", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:18.845039", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:18.848519", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "aff8f7bd-e58f-4b30-b690-981bd531368c", "method": "GET", "path": "/api/llm/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:29:19.291785", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:19.307966", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:29:19.571732", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:29:19.573502", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "aff8f7bd-e58f-4b30-b690-981bd531368c", "method": "GET", "path": "/api/llm/health", "status_code": 200, "duration_ms": 723.98}
+{"timestamp": "2026-03-04T06:29:19.651462", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:20.062924", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:20.476034", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:20.882082", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:21.296577", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:21.646159", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "ebea0825-f4b1-4ed0-a9cd-669787e2dd4b", "method": "POST", "path": "/api/llm/chat", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:29:21.697977", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:21.939617", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:29:21.941627", "level": "INFO", "logger": "root", "message": "LLM chat [local]", "module": "llm", "function": "llm_chat", "line": 175, "request_id": "ebea0825-f4b1-4ed0-a9cd-669787e2dd4b", "mode": "local", "messages": 1}
+{"timestamp": "2026-03-04T06:29:21.941627", "level": "INFO", "logger": "root", "message": "Using local Ollama", "module": "llm", "function": "llm_chat", "line": 184, "request_id": "ebea0825-f4b1-4ed0-a9cd-669787e2dd4b"}
+{"timestamp": "2026-03-04T06:29:22.122784", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:22.257478", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST http://localhost:11434/api/chat \"HTTP/1.1 404 Not Found\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:29:22.259490", "level": "ERROR", "logger": "root", "message": "LLM error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404", "module": "llm", "function": "llm_chat", "line": 231, "exception": "Traceback (most recent call last):\n  File \"P:\\PROGRAMMING\\AI_ML\\Ml-Models\\models-deployments\\backend\\api\\LLM\\llm.py\", line 185, in llm_chat\n    reply = await call_ollama(\n  File \"P:\\PROGRAMMING\\AI_ML\\Ml-Models\\models-deployments\\backend\\api\\LLM\\llm.py\", line 67, in call_ollama\n    response.raise_for_status()\n  File \"C:\\Users\\achin\\miniconda3\\envs\\ML\\lib\\site-packages\\httpx\\_models.py\", line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"}
+{"timestamp": "2026-03-04T06:29:22.262490", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "ebea0825-f4b1-4ed0-a9cd-669787e2dd4b", "method": "POST", "path": "/api/llm/chat", "status_code": 500, "duration_ms": 653.34}
+{"timestamp": "2026-03-04T06:29:22.497063", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:22.899608", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:23.345778", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:23.788010", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:24.184039", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:24.305833", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "195e27e7-13b5-4064-a835-b85d7e52ee93", "method": "POST", "path": "/api/llm/chat", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:29:24.567572", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:24.593509", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:29:24.595151", "level": "INFO", "logger": "root", "message": "LLM chat [local]", "module": "llm", "function": "llm_chat", "line": 175, "request_id": "195e27e7-13b5-4064-a835-b85d7e52ee93", "mode": "local", "messages": 2}
+{"timestamp": "2026-03-04T06:29:24.595664", "level": "INFO", "logger": "root", "message": "Using local Ollama", "module": "llm", "function": "llm_chat", "line": 184, "request_id": "195e27e7-13b5-4064-a835-b85d7e52ee93"}
+{"timestamp": "2026-03-04T06:29:24.909371", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST http://localhost:11434/api/chat \"HTTP/1.1 404 Not Found\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:29:24.910276", "level": "ERROR", "logger": "root", "message": "LLM error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404", "module": "llm", "function": "llm_chat", "line": 231, "exception": "Traceback (most recent call last):\n  File \"P:\\PROGRAMMING\\AI_ML\\Ml-Models\\models-deployments\\backend\\api\\LLM\\llm.py\", line 185, in llm_chat\n    reply = await call_ollama(\n  File \"P:\\PROGRAMMING\\AI_ML\\Ml-Models\\models-deployments\\backend\\api\\LLM\\llm.py\", line 67, in call_ollama\n    response.raise_for_status()\n  File \"C:\\Users\\achin\\miniconda3\\envs\\ML\\lib\\site-packages\\httpx\\_models.py\", line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"}
+{"timestamp": "2026-03-04T06:29:24.910782", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "195e27e7-13b5-4064-a835-b85d7e52ee93", "method": "POST", "path": "/api/llm/chat", "status_code": 500, "duration_ms": 604.95}
+{"timestamp": "2026-03-04T06:29:24.975970", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:25.334485", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:25.747123", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:26.186527", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:26.576188", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:26.937760", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:27.403617", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:27.808602", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:28.175357", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:28.590558", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:28.995107", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:29.465148", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:29.871327", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:30.347905", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:30.766158", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:31.173785", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:31.530158", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:31.969662", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:29:32.323308", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:31:18.266434", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:31:18.266434", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:31:18.266434", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:31:18.266434", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:31:18.266434", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:31:18.267940", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:31:18.959043", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:31:18.959043", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:31:19.000549", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:31:19.000549", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:31:19.110638", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:31:19.110638", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:31:19.166154", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:31:19.167154", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:31:19.230694", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:31:19.231687", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:31:19.231687", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:31:29.745902", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "1045dcae-f4c1-44a2-8d07-c1938abbacb9", "method": "GET", "path": "/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:31:29.745902", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "1045dcae-f4c1-44a2-8d07-c1938abbacb9", "method": "GET", "path": "/health", "status_code": 200, "duration_ms": 0.0}
+{"timestamp": "2026-03-04T06:31:31.788187", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "ca83c096-09cc-4fd1-9b83-4a0e84720160", "method": "GET", "path": "/api/llm/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:31:32.118287", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:31:32.397183", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:31:32.399676", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "ca83c096-09cc-4fd1-9b83-4a0e84720160", "method": "GET", "path": "/api/llm/health", "status_code": 200, "duration_ms": 613.98}
+{"timestamp": "2026-03-04T06:31:34.421238", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "fd9435d8-372f-43af-82f4-81253f8cc861", "method": "POST", "path": "/api/llm/chat", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:31:34.725129", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:31:34.726143", "level": "INFO", "logger": "root", "message": "LLM chat [local]", "module": "llm", "function": "llm_chat", "line": 182, "request_id": "fd9435d8-372f-43af-82f4-81253f8cc861", "mode": "local", "messages": 1}
+{"timestamp": "2026-03-04T06:31:34.727143", "level": "INFO", "logger": "root", "message": "Using local Ollama", "module": "llm", "function": "llm_chat", "line": 191, "request_id": "fd9435d8-372f-43af-82f4-81253f8cc861"}
+{"timestamp": "2026-03-04T06:31:46.877086", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST http://localhost:11434/api/chat \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:31:46.878429", "level": "INFO", "logger": "root", "message": "LLM chat done [local]", "module": "llm", "function": "llm_chat", "line": 218, "request_id": "fd9435d8-372f-43af-82f4-81253f8cc861", "duration_ms": 12456.19, "mode": "local"}
+{"timestamp": "2026-03-04T06:31:46.878934", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "fd9435d8-372f-43af-82f4-81253f8cc861", "method": "POST", "path": "/api/llm/chat", "status_code": 200, "duration_ms": 12458.19}
+{"timestamp": "2026-03-04T06:33:35.064932", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:35.252814", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:33:36.107991", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:38.739695", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:33:38.739695", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:33:38.739695", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:33:38.740694", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:33:38.741725", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:33:38.742563", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:33:38.759647", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:39.122840", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:39.483547", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:40.173851", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:33:40.173851", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:33:40.236432", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:33:40.236432", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:33:40.264577", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:40.382267", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:33:40.382267", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:33:40.437661", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:33:40.437661", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:33:40.477783", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:33:40.478788", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:33:40.479785", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:33:40.627254", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:41.034213", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:41.493851", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:41.856962", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:42.295684", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:42.708677", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:43.115009", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:43.600991", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:44.011677", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:44.577041", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:44.930824", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:45.338334", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:45.745191", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:46.148604", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:46.555917", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:46.963057", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:47.373021", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:47.791064", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:48.198289", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:48.603808", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:49.008675", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:49.416252", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:49.824187", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:50.230307", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:50.647490", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:51.060342", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:51.463306", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:51.867587", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:52.279703", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:52.640641", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:53.044515", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:53.508301", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:53.931119", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:54.295416", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:54.705082", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:55.124361", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:55.529478", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:55.934874", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:56.305473", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:56.716173", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:57.120976", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:57.526598", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:57.935587", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:58.356036", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:58.779270", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:59.181737", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:33:59.591635", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:00.025324", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:00.382889", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:00.793875", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:01.199695", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:01.607204", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:02.013222", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:02.421808", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:02.844517", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:03.257245", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:03.664945", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:04.070041", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:04.475019", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:04.881999", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:05.290698", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:05.695313", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:06.077451", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:06.492836", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:06.903829", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:07.275046", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:07.680695", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:08.093454", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:08.513931", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:08.947573", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:09.300616", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:09.716569", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:10.128602", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:10.546297", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:10.993653", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:11.410006", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:11.826236", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:12.231472", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:12.641552", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:13.057964", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:13.463407", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:13.867904", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:14.276782", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:14.683735", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:15.095548", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:15.509274", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:15.916142", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:16.282924", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:16.696527", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:17.108747", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:17.526344", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:17.931814", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:18.344883", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:18.757762", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:19.161100", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:19.574146", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:19.938118", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:20.394447", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:20.760323", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:21.179051", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:21.601917", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:22.017953", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:22.475876", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:22.890483", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:23.248010", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:23.678890", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:24.093737", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:24.497350", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:25.033444", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:25.437662", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:25.848057", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:26.268345", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:26.635609", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:27.081183", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:27.495124", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:27.877840", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:28.296099", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:28.713568", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:29.122761", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:29.526668", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:29.930372", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:30.344431", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:30.760395", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:31.164618", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:31.573281", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:31.997319", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:32.414013", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:32.832169", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:33.241483", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:33.644498", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:34.031951", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:34.447357", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:34.854620", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:35.263160", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:35.629166", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:36.044508", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:36.463363", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:36.873943", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:37.240888", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:37.650102", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:38.080315", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:38.491429", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:38.900463", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:39.275157", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:39.684745", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:40.093697", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:40.507824", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:41.015224", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:41.372617", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:41.795870", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:42.199606", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:42.610803", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:43.026125", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:43.434984", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:43.843245", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:44.202962", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:44.614270", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:45.027141", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:45.398645", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:45.803044", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:46.311283", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:46.676180", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:47.082625", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:47.459041", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:47.867470", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:48.281298", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:48.644854", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:49.088633", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:49.447390", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:49.853377", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:50.342172", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:50.705578", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:51.073733", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:51.479717", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:51.892408", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:52.251268", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:52.693953", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:53.103518", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:53.538805", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:53.901106", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:54.329911", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:54.712922", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:55.121119", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:55.527020", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:55.933363", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:56.341342", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:56.747934", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:57.154805", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:57.561732", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:57.966216", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:58.370842", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:58.778411", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:59.184786", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:34:59.557148", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:00.032643", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:00.439443", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:00.844719", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:01.250259", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:01.658318", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:02.066160", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:02.473420", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:02.877033", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:03.286729", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:03.696444", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:04.101405", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:04.466490", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:04.886513", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:05.337331", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:05.702328", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:06.115220", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:06.519757", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:06.980540", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:07.350181", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:07.795975", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:08.209019", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:08.613560", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:09.025927", "level": "INFO", "logger": "watchfiles.main", "message": "2 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:09.186868", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:35:09.808927", "level": "INFO", "logger": "watchfiles.main", "message": "2 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:12.215697", "level": "INFO", "logger": "watchfiles.main", "message": "5 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:12.376795", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:35:12.379806", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:35:12.387693", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:35:12.390801", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:35:12.403789", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:12.407689", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:12.588742", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:12.975967", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:13.348327", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:13.730411", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:14.087823", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:14.228431", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:35:14.228431", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:14.273369", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:35:14.273369", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:14.395523", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:35:14.396519", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:14.445312", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:35:14.446821", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:14.489879", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:35:14.489879", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:35:14.489879", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:35:14.497285", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:14.939548", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:15.294046", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:15.733612", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:16.144750", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:16.562865", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:17.006350", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:17.369409", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:17.820313", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:18.237738", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:18.650305", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:19.061504", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:19.468690", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:19.877966", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:20.282596", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:20.692045", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:21.156718", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:21.514422", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:21.928370", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:22.336940", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:22.751412", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:23.163814", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:23.571475", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:23.931018", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:24.339974", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:24.749175", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:25.158341", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:25.566063", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:25.974700", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:26.384562", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:26.899790", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:27.266983", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:27.684985", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:28.044612", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:28.464871", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:28.879106", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:29.233114", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:29.647104", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:30.054716", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:30.463862", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:30.820892", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:31.230910", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:31.639426", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:32.042908", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:32.451052", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:32.861466", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:33.246569", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:33.732651", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:34.094795", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:34.507689", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:34.866507", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:35.281824", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:35.692451", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:36.111339", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:36.514376", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:36.944561", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:37.310954", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:37.726806", "level": "INFO", "logger": "watchfiles.main", "message": "2 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:37.927472", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:35:38.545737", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:38.906610", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:39.264764", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:39.626084", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:39.985132", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:40.339651", "level": "INFO", "logger": "watchfiles.main", "message": "2 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:40.864281", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:41.216070", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:41.578388", "level": "INFO", "logger": "watchfiles.main", "message": "2 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:42.018217", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:43.137355", "level": "INFO", "logger": "watchfiles.main", "message": "5 changes detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:43.226905", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:35:43.226905", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:35:43.227918", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:35:43.227918", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:35:43.227918", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:43.227918", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:43.495729", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:43.858755", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:44.012981", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:35:44.013320", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:44.054376", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:35:44.055371", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:44.234581", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:35:44.235559", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:44.245563", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:44.290458", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:35:44.290458", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:44.338455", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:35:44.338455", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:35:44.338455", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:35:44.609819", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:44.971626", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:45.333098", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:45.694576", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:46.051376", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:46.411383", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:46.821458", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:47.229771", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:47.588252", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:47.997018", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:48.402929", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:48.911615", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:49.285879", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:49.701715", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:50.106306", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:50.519851", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:50.941631", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:51.360597", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:51.807751", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:52.222988", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:52.628632", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:53.045637", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:53.521951", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:53.877091", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:54.288149", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:54.711975", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:55.115386", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:55.540044", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-03-04T06:35:55.827809", "level": "INFO", "logger": "root", "message": "Shutting down FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 31}
+{"timestamp": "2026-03-04T06:35:59.947560", "level": "INFO", "logger": "root", "message": "Starting FastAPI ML Server...", "module": "app", "function": "lifespan", "line": 20}
+{"timestamp": "2026-03-04T06:35:59.947560", "level": "INFO", "logger": "root", "message": "Environment: development", "module": "app", "function": "lifespan", "line": 21}
+{"timestamp": "2026-03-04T06:35:59.947560", "level": "INFO", "logger": "root", "message": "Debug Mode: True", "module": "app", "function": "lifespan", "line": 22}
+{"timestamp": "2026-03-04T06:35:59.948345", "level": "INFO", "logger": "root", "message": "Loading all models...", "module": "model_loader", "function": "load_all_models", "line": 123}
+{"timestamp": "2026-03-04T06:35:59.948345", "level": "INFO", "logger": "root", "message": "Model already exists: models/smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:35:59.948345", "level": "INFO", "logger": "root", "message": "Model already exists: models/non_smoker_model.pkl", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:36:00.687342", "level": "INFO", "logger": "root", "message": "\u2705 Medical charge models loaded successfully", "module": "model_loader", "function": "load_medical_charge_models", "line": 62}
+{"timestamp": "2026-03-04T06:36:00.687342", "level": "INFO", "logger": "root", "message": "Model already exists: models/Heart_Disease_Predictor.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:36:00.733762", "level": "INFO", "logger": "root", "message": "\u2705 Heart disease model loaded successfully", "module": "model_loader", "function": "load_heart_disease_model", "line": 75}
+{"timestamp": "2026-03-04T06:36:00.733762", "level": "INFO", "logger": "root", "message": "Model already exists: models/customer_churn_prediction.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:36:00.850415", "level": "INFO", "logger": "root", "message": "\u2705 Customer churn model loaded successfully", "module": "model_loader", "function": "load_customer_churn_model", "line": 88}
+{"timestamp": "2026-03-04T06:36:00.850415", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_treated_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:36:00.897917", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Treated model loaded successfully", "module": "model_loader", "function": "load_uplift_treated_model", "line": 101}
+{"timestamp": "2026-03-04T06:36:00.897917", "level": "INFO", "logger": "root", "message": "Model already exists: models/uplift_control_model.joblib", "module": "model_loader", "function": "download_model_if_needed", "line": 24}
+{"timestamp": "2026-03-04T06:36:00.941455", "level": "INFO", "logger": "root", "message": "\u2705 Uplift Control model loaded successfully", "module": "model_loader", "function": "load_uplift_control_model", "line": 115}
+{"timestamp": "2026-03-04T06:36:00.941455", "level": "INFO", "logger": "root", "message": "Model loading complete!", "module": "model_loader", "function": "load_all_models", "line": 129}
+{"timestamp": "2026-03-04T06:36:00.941455", "level": "INFO", "logger": "root", "message": "Server ready!", "module": "app", "function": "lifespan", "line": 27}
+{"timestamp": "2026-03-04T06:36:17.580303", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "fcc7cf67-ec3a-4614-9b07-e01f051dd395", "method": "GET", "path": "/api/llm/docs", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:36:17.584294", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "fcc7cf67-ec3a-4614-9b07-e01f051dd395", "method": "GET", "path": "/api/llm/docs", "status_code": 200, "duration_ms": 4.01}
+{"timestamp": "2026-03-04T06:36:17.969113", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "dbd3b089-6823-40bd-9432-faad6f1e3001", "method": "GET", "path": "/favicon.ico", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:36:17.970331", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "dbd3b089-6823-40bd-9432-faad6f1e3001", "method": "GET", "path": "/favicon.ico", "status_code": 404, "duration_ms": 2.22}
+{"timestamp": "2026-03-04T06:36:28.962964", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "5a1733b8-e9e1-48d8-bf98-343964271929", "method": "GET", "path": "/api/llm/health", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:36:29.443335", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:36:29.762770", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:36:29.764779", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "5a1733b8-e9e1-48d8-bf98-343964271929", "method": "GET", "path": "/api/llm/health", "status_code": 200, "duration_ms": 803.33}
+{"timestamp": "2026-03-04T06:36:51.629956", "level": "INFO", "logger": "root", "message": "Request started", "module": "app", "function": "log_requests", "line": 63, "request_id": "a957d3d1-acfa-4a94-8b16-e216e4e9daa1", "method": "POST", "path": "/api/llm/chat", "client_ip": "127.0.0.1"}
+{"timestamp": "2026-03-04T06:36:51.955414", "level": "INFO", "logger": "httpx", "message": "HTTP Request: GET http://localhost:11434/api/tags \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:36:51.957990", "level": "INFO", "logger": "root", "message": "LLM chat [local]", "module": "llm", "function": "llm_chat", "line": 182, "request_id": "a957d3d1-acfa-4a94-8b16-e216e4e9daa1", "mode": "local", "messages": 1}
+{"timestamp": "2026-03-04T06:36:51.957990", "level": "INFO", "logger": "root", "message": "Using local Ollama", "module": "llm", "function": "llm_chat", "line": 191, "request_id": "a957d3d1-acfa-4a94-8b16-e216e4e9daa1"}
+{"timestamp": "2026-03-04T06:37:03.380027", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST http://localhost:11434/api/chat \"HTTP/1.1 200 OK\"", "module": "_client", "function": "_send_single_request", "line": 1740}
+{"timestamp": "2026-03-04T06:37:03.381569", "level": "INFO", "logger": "root", "message": "LLM chat done [local]", "module": "llm", "function": "llm_chat", "line": 218, "request_id": "a957d3d1-acfa-4a94-8b16-e216e4e9daa1", "duration_ms": 11749.07, "mode": "local"}
+{"timestamp": "2026-03-04T06:37:03.382584", "level": "INFO", "logger": "root", "message": "Request completed", "module": "app", "function": "log_requests", "line": 78, "request_id": "a957d3d1-acfa-4a94-8b16-e216e4e9daa1", "method": "POST", "path": "/api/llm/chat", "status_code": 200, "duration_ms": 11755.15}

@@ -11,7 +11,7 @@ from config.logging_config import setup_logging, logger
 from config.settings import settings
 from utils.model_loader import load_all_models
 from api.machine_learning import medical_charge, heart_disease, customer_churn,customer_uplift
-
+from api.LLM import llm
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -153,6 +153,13 @@ app.include_router(
     prefix="/predict_uplift",
     tags=["uplift Prediction"]
 )
+
+app.include_router(
+    llm.router,
+    prefix="/api/llm",
+    tags=["LLM - Llama 3.1"]
+)
+
 
 
 @app.get("/")
