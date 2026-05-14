@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package traceum;
+
+service TraceumUplift {
+  rpc PredictUplift (UpliftRequest) returns (UpliftResponse);
+}
+
+message UpliftRequest {
+  float f0  = 1;
+  float f1  = 2;
+  float f2  = 3;
+  float f3  = 4;
+  float f4  = 5;
+  float f5  = 6;
+  float f6  = 7;
+  float f7  = 8;
+  float f8  = 9;
+  float f9  = 10;
+  float f10 = 11;
+  float f11 = 12;
+}
+
+message UpliftResponse {
+  bool  success     = 1;
+  float uplift_t    = 2;
+  float uplift_s    = 3;
+  float avg_uplift  = 4;
+  bool  send_ad     = 5;
+}

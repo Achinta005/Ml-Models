@@ -3,17 +3,21 @@ import joblib
 import os
 import requests
 from typing import Optional
+from sklearn.ensemble import RandomForestClassifier
 from config.logging_config import logger
 from config.settings import settings
 
 class ModelStore:
     """Global storage for loaded ML models"""
-    smoker_model = None
-    non_smoker_model = None
-    heart_disease_model = None
-    customer_churn_model = None
-    uplift_treated_model =None
-    uplift_control_model =None
+    smoker_model: Optional[object] = None
+    non_smoker_model: Optional[object] = None
+    heart_disease_model: Optional[object] = None
+    customer_churn_model: Optional[object] = None
+    uplift_treated_model: Optional[RandomForestClassifier] = None
+    uplift_control_model: Optional[RandomForestClassifier] = None
+    traceum_treated_model: Optional[RandomForestClassifier] = None
+    traceum_control_model: Optional[RandomForestClassifier] = None
+    traceum_s_model: Optional[RandomForestClassifier] = None
 
 models = ModelStore()
 
@@ -115,7 +119,50 @@ def load_uplift_control_model():
         logger.info("✅ Uplift Control model loaded successfully")
         
     except Exception as e:
-        logger.error(f"❌ Failed to load uplift control model: {str(e)}", exc_info=True)  
+        logger.error(f"❌ Failed to load uplift control model: {str(e)}", exc_info=True)
+
+
+def load_traceum_treated_model():
+    """Load Traceum Treated Model (T-learner)"""
+    try:
+        MODEL_URL = f"https://drive.google.com/uc?export=download&id={settings.TRACEUM_TREATED_MODEL_ID}"
+        LOCAL_PATH = f"{settings.MODELS_DIR}/traceum_treated_model.joblib"
+        
+        download_model_if_needed(MODEL_URL, LOCAL_PATH)
+        models.traceum_treated_model = joblib.load(LOCAL_PATH)
+        logger.info("✅ Traceum Treated model loaded successfully")
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to load traceum treated model: {str(e)}", exc_info=True)
+
+
+def load_traceum_control_model():
+    """Load Traceum Control Model (T-learner)"""
+    try:
+        MODEL_URL = f"https://drive.google.com/uc?export=download&id={settings.TRACEUM_CONTROL_MODEL_ID}"
+        LOCAL_PATH = f"{settings.MODELS_DIR}/traceum_control_model.joblib"
+        
+        download_model_if_needed(MODEL_URL, LOCAL_PATH)
+        models.traceum_control_model = joblib.load(LOCAL_PATH)
+        logger.info("✅ Traceum Control model loaded successfully")
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to load traceum control model: {str(e)}", exc_info=True)
+
+
+def load_traceum_s_model():
+    """Load Traceum S-learner Model"""
+    try:
+        MODEL_URL = f"https://drive.google.com/uc?export=download&id={settings.TRACEUM_S_MODEL_ID}"
+        LOCAL_PATH = f"{settings.MODELS_DIR}/traceum_s_model.joblib"
+        
+        download_model_if_needed(MODEL_URL, LOCAL_PATH)
+        models.traceum_s_model = joblib.load(LOCAL_PATH)
+        logger.info("✅ Traceum S-learner model loaded successfully")
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to load traceum s-learner model: {str(e)}", exc_info=True)
+    
     
     
 def load_all_models():
@@ -126,4 +173,7 @@ def load_all_models():
     load_customer_churn_model()
     load_uplift_treated_model()
     load_uplift_control_model()
+    load_traceum_treated_model()
+    load_traceum_control_model()
+    load_traceum_s_model()
     logger.info("Model loading complete!")

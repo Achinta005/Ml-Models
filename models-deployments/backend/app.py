@@ -4,14 +4,16 @@ from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 import time
 import uuid
+import threading
 from datetime import datetime
 import uvicorn
 
 from config.logging_config import setup_logging, logger
 from config.settings import settings
 from utils.model_loader import load_all_models
-from api.machine_learning import medical_charge, heart_disease, customer_churn,customer_uplift
+from api.machine_learning import medical_charge, heart_disease, customer_churn, customer_uplift
 from api.LLM import llm
+from grpc_server import serve as grpc_serve
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,6 +25,11 @@ async def lifespan(app: FastAPI):
     
     # Load all models
     load_all_models()
+    
+    # Start gRPC server in background thread
+    grpc_thread = threading.Thread(target=grpc_serve, daemon=True)
+    grpc_thread.start()
+    logger.info("gRPC server started on port 50051")
     
     logger.info("Server ready!")
     yield

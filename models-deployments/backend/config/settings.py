@@ -40,6 +40,9 @@ class Settings(BaseSettings):
     CUSTOMER_CHURN_MODEL_ID: str = "1K7_bUT2futcBchMb8MrTdUxyeFUVSCO4"
     UPLIFT_TREATED_MODEL_ID: str = "1Akl2p0P666rzOf2zGpNZQ9xioZ0ua-oV"
     UPLIFT_CONTROL_MODEL_ID: str = "1c8B9K0qDX2gN4kDPKgl1YmhVWvULK7-c"
+    TRACEUM_TREATED_MODEL_ID: str = "17x4CnJGZ-TQf8hCy1hvZ9dl5eDA0IDqp"
+    TRACEUM_CONTROL_MODEL_ID: str = "1mFIMs5vtST_xiPsrrolh3UTiVutpxadF"
+    TRACEUM_S_MODEL_ID: str = "191ZOL4p_fV3ntKBkZ7DLO0Q9pCFu1SNO" 
     
     class Config:
         env_file = ".env"
