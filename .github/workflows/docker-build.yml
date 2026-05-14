@@ -1,4 +1,4 @@
-name: Build, Push Docker Image & Deploy to Render
+name: Build, Push Docker Image & Deploy to VM
 
 on:
   push:
@@ -29,9 +29,26 @@ jobs:
             achinta005/fast_ml_server:latest
             achinta005/fast_ml_server:${{ github.sha }}
 
-      - name: Trigger Render Deploy
-        run: |
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+      - name: Deploy to Azure VM
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            cd /var/www/fastapi
+
+            docker compose pull fastapi
+
+            docker compose up -d --no-deps fastapi
+
+            docker images achinta005/fast_ml_server --format "{{.ID}} {{.Tag}}" | \
+              grep -v latest | \
+              awk '{print $1}' | \
+              xargs -r docker rmi -f
+
+            docker image prune -f
+
+            docker compose ps
+
+            echo "✅ FastAPI ML Server deployed successfully!"
