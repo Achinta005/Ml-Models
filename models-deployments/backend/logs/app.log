@@ -5363,3 +5363,9 @@
 {"timestamp": "2026-05-15T15:40:10.090242", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
 {"timestamp": "2026-05-15T15:40:10.455223", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
 {"timestamp": "2026-05-15T15:40:10.860904", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-05-15T15:40:11.274596", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-05-15T15:40:11.639758", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-05-15T15:40:12.005167", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-05-15T15:40:12.359052", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-05-15T15:40:12.712848", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
+{"timestamp": "2026-05-15T15:40:13.076929", "level": "INFO", "logger": "watchfiles.main", "message": "1 change detected", "module": "main", "function": "_log_changes", "line": 308}
