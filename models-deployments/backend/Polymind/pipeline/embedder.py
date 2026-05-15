@@ -1,4 +1,5 @@
 import os
+
 os.environ.setdefault("HF_HOME", "/app/.cache/huggingface")
 
 import logging
@@ -12,7 +13,8 @@ from Polymind.pipeline.chunker import Chunk
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+_ONNX_MODEL_DIR = os.getenv("ONNX_MODEL_DIR", "/app/.cache/onnx")
+_ONNX_REPO = "optimum/all-MiniLM-L6-v2"
 
 
 @dataclass
@@ -38,14 +40,27 @@ def _normalize(embeddings: np.ndarray) -> np.ndarray:
 
 
 class Embedder:
-    def __init__(self, model_name: str = _DEFAULT_MODEL):
-        from huggingface_hub import hf_hub_download
+    def __init__(self):
+        onnx_path = os.path.join(_ONNX_MODEL_DIR, "model.onnx")
+        tokenizer_path = os.path.join(_ONNX_MODEL_DIR, "tokenizer.json")
 
-        logger.info(f"Loading ONNX embedding model: {model_name}")
+        # Fallback: download at runtime if not baked into image
+        if not os.path.exists(onnx_path) or not os.path.exists(tokenizer_path):
+            logger.warning("ONNX model not found locally, downloading from HuggingFace...")
+            from huggingface_hub import hf_hub_download
+            os.makedirs(_ONNX_MODEL_DIR, exist_ok=True)
+            onnx_path = hf_hub_download(
+                repo_id=_ONNX_REPO,
+                filename="model.onnx",
+                local_dir=_ONNX_MODEL_DIR,
+            )
+            tokenizer_path = hf_hub_download(
+                repo_id=_ONNX_REPO,
+                filename="tokenizer.json",
+                local_dir=_ONNX_MODEL_DIR,
+            )
 
-        # Download ONNX model and tokenizer from HuggingFace
-        onnx_path = hf_hub_download(repo_id=model_name, filename="onnx/model.onnx")
-        tokenizer_path = hf_hub_download(repo_id=model_name, filename="tokenizer.json")
+        logger.info(f"Loading ONNX model from {onnx_path}")
 
         sess_options = ort.SessionOptions()
         sess_options.inter_op_num_threads = 2
@@ -88,10 +103,9 @@ class Embedder:
         texts = [c.text for c in chunks]
         logger.info(f"Embedding {len(texts)} chunk(s)...")
 
-        # batch in groups of 32
         all_embeddings = []
         for i in range(0, len(texts), 32):
-            all_embeddings.append(self._encode(texts[i:i+32]))
+            all_embeddings.append(self._encode(texts[i:i + 32]))
         embeddings = np.concatenate(all_embeddings, axis=0)
 
         vectors = [
