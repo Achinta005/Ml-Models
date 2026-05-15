@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     
     # Model Paths
     MODELS_DIR: str = "models"
+    UPLOAD_DIR: str = "uploaded_docs"
     
     # Google Drive IDs
     SMOKER_MODEL_ID: str = "1vhoNvvpkGJ6pYasbDFU7I_3lJcYtkqhh"
@@ -43,6 +44,14 @@ class Settings(BaseSettings):
     TRACEUM_TREATED_MODEL_ID: str = "17x4CnJGZ-TQf8hCy1hvZ9dl5eDA0IDqp"
     TRACEUM_CONTROL_MODEL_ID: str = "1mFIMs5vtST_xiPsrrolh3UTiVutpxadF"
     TRACEUM_S_MODEL_ID: str = "191ZOL4p_fV3ntKBkZ7DLO0Q9pCFu1SNO" 
+    HF_TOKEN: str = ""
+    # DB
+    POSTGRES_HOST: str = ""
+    POSTGRES_PORT: int = 5432
+    POSTGRES_USER: str = ""
+    POSTGRES_PASSWORD: str = ""
+    POSTGRES_DB: str = ""
+    POSTGRES_SCHEMA: str = "public"
     
     class Config:
         env_file = ".env"

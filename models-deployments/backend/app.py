@@ -5,37 +5,38 @@ from contextlib import asynccontextmanager
 import time
 import uuid
 import threading
+import asyncio
 from datetime import datetime
 import uvicorn
 
 from config.logging_config import setup_logging, logger
 from config.settings import settings
 from utils.model_loader import load_all_models
+from Polymind.Database import db
 from api.machine_learning import medical_charge, heart_disease, customer_churn, customer_uplift
 from api.LLM import llm
-from grpc_server import serve as grpc_serve
+from grpc_server import serve as grpc_serve, set_main_loop
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events"""
-    # Startup
-    logger.info("Starting FastAPI ML Server...")
-    logger.info(f"Environment: {settings.ENVIRONMENT}")
-    logger.info(f"Debug Mode: {settings.DEBUG}")
-    
-    # Load all models
     load_all_models()
-    
-    # Start gRPC server in background thread
+
+    await db.connect()
+    await db.create_tables()
+
+    # Pass the running uvicorn loop to gRPC before starting the thread
+    set_main_loop(asyncio.get_event_loop())
+
     grpc_thread = threading.Thread(target=grpc_serve, daemon=True)
     grpc_thread.start()
     logger.info("gRPC server started on port 50051")
-    
+
     logger.info("Server ready!")
     yield
-    
-    # Shutdown
-    logger.info("Shutting down FastAPI ML Server...")
+
+    await db.disconnect()
+    logger.info("Shutting down...")
     
 
 app = FastAPI(
