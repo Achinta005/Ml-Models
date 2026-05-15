@@ -17,3 +17,5 @@ python-multipart==0.0.6
 
 grpcio==1.74.0
 grpcio-tools==1.74.0 
+
+asyncpg
