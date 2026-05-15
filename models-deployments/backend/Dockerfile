@@ -6,7 +6,10 @@ ENV ONNX_MODEL_DIR=/app/.cache/onnx
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y build-essential \
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    tesseract-ocr \
+    tesseract-ocr-eng \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .

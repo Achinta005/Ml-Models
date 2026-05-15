@@ -21,6 +21,8 @@ Thumbs.db
 # Environment
 .env
 
+logs/*
+
 # Ignore everything inside models/
 models/*
 
