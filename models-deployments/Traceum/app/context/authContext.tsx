@@ -3,8 +3,8 @@
 import React, {
   createContext,
   useContext,
-  useState,
   useEffect,
+  useState,
   useCallback,
   useRef,
   ReactNode,
@@ -24,14 +24,14 @@ interface AuthSession {
   expires_at?: number;
 }
 
-interface AuthState {
+interface AuthContextValue {
   user: AuthUser | null;
-  accessToken: string | null;   // kept in React state only (never localStorage)
-  isLoading: boolean;
+  accessToken: string | null;
   isAuthenticated: boolean;
-}
-
-interface AuthContextValue extends AuthState {
+  isAuthLoading: boolean;
+  setAccessToken: (token: string | null) => void;
+  setIsAuthenticated: (val: boolean) => void;
+  setUser: (user: AuthUser | null) => void;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, fullName: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -44,7 +44,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api';
 const PROJECT = 'traceum';
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
-async function apiFetch<T = any>(
+async function apiFetch<T = unknown>(
   path: string,
   options: RequestInit = {},
   accessToken?: string | null,
@@ -59,15 +59,15 @@ async function apiFetch<T = any>(
   const res = await fetch(`${API_BASE}/${PROJECT}${path}`, {
     ...options,
     headers,
-    credentials: 'include', // sends httpOnly refresh_token cookie automatically
+    credentials: 'include',
   });
 
   if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
+    const body = await res.json().catch(() => ({})) as { message?: string };
     throw new Error(body?.message ?? `Request failed: ${res.status}`);
   }
 
-  return res.json();
+  return res.json() as Promise<T>;
 }
 
 // ── Context ────────────────────────────────────────────────────────────────────
@@ -77,14 +77,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
-  // track refresh in-flight to avoid duplicate calls
   const refreshPromiseRef = useRef<Promise<string | null> | null>(null);
 
-  // ── Silent refresh on mount ────────────────────────────────────────────────
+  // ── Silent refresh ─────────────────────────────────────────────────────────
   const refreshAccessToken = useCallback(async (): Promise<string | null> => {
-    // Deduplicate concurrent calls
     if (refreshPromiseRef.current) return refreshPromiseRef.current;
 
     const promise = (async () => {
@@ -97,10 +96,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const newToken = data.data.session.access_token;
         setUser(data.data.user);
         setAccessToken(newToken);
+        setIsAuthenticated(true);
         return newToken;
       } catch {
         setUser(null);
         setAccessToken(null);
+        setIsAuthenticated(false);
         return null;
       } finally {
         refreshPromiseRef.current = null;
@@ -111,8 +112,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return promise;
   }, []);
 
+  // ── Restore session on mount ───────────────────────────────────────────────
   useEffect(() => {
-    refreshAccessToken().finally(() => setIsLoading(false));
+    const restoreSession = async () => {
+      try {
+        const token = await refreshAccessToken();
+        if (!token) {
+          setIsAuthenticated(false);
+          setUser(null);
+          setAccessToken(null);
+        }
+      } finally {
+        setIsAuthLoading(false);
+      }
+    };
+
+    restoreSession();
   }, [refreshAccessToken]);
 
   // ── Login ──────────────────────────────────────────────────────────────────
@@ -127,7 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setUser(data.data.user);
     setAccessToken(data.data.session.access_token);
-    // refresh_token is set as httpOnly cookie by the server automatically
+    setIsAuthenticated(true);
   }, []);
 
   // ── Register ───────────────────────────────────────────────────────────────
@@ -137,18 +152,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: 'POST',
         body: JSON.stringify({ email, password, fullName }),
       });
-      // Don't auto-login — user needs to verify email
     },
     [],
   );
 
   // ── Logout ─────────────────────────────────────────────────────────────────
   const logout = useCallback(async () => {
-    await apiFetch('/auth/logout', { method: 'POST' }, accessToken).catch(
-      () => {},
-    );
+    await apiFetch('/auth/logout', { method: 'POST' }, accessToken).catch(() => {});
     setUser(null);
     setAccessToken(null);
+    setIsAuthenticated(false);
     router.push('/login');
   }, [accessToken, router]);
 
@@ -160,19 +173,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const value: AuthContextValue = {
-    user,
-    accessToken,
-    isLoading,
-    isAuthenticated: !!user && !!accessToken,
-    login,
-    register,
-    logout,
-    forgotPassword,
-    refreshAccessToken,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        accessToken,
+        isAuthenticated,
+        isAuthLoading,
+        setUser,
+        setAccessToken,
+        setIsAuthenticated,
+        login,
+        register,
+        logout,
+        forgotPassword,
+        refreshAccessToken,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 // ── Hook ───────────────────────────────────────────────────────────────────────
@@ -182,9 +202,8 @@ export function useAuth(): AuthContextValue {
   return ctx;
 }
 
-// ── Axios-style fetch wrapper that auto-retries with refreshed token ───────────
-// Use this in your API calls instead of raw fetch
-export async function authFetch<T = any>(
+// ── authFetch — auto-retries with refreshed token ─────────────────────────────
+export async function authFetch<T = unknown>(
   path: string,
   options: RequestInit,
   getToken: () => string | null,
@@ -193,8 +212,9 @@ export async function authFetch<T = any>(
   let token = getToken();
   try {
     return await apiFetch<T>(path, options, token);
-  } catch (err: any) {
-    if (err.message?.includes('401') || err.message?.includes('403')) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : '';
+    if (message.includes('401') || message.includes('403')) {
       token = await refresh();
       if (!token) throw err;
       return apiFetch<T>(path, options, token);

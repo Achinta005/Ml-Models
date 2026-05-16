@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/service-worker.js',
+        destination: '/api/noop', // or just remove SW registration from your code
+      },
+    ];
+  },
 };
 
 export default nextConfig;
