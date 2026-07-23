@@ -57,7 +57,7 @@ COPY --chown=appuser:appuser . .
 RUN chown -R appuser:appuser /app
 
 USER appuser
-
+ 
 # Download spaCy model AFTER switching to appuser, into the runtime stage
 # so it lands in the same site-packages tree that PYTHONPATH points to
 RUN python -m spacy download en_core_web_sm
