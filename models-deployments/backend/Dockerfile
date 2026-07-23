@@ -15,12 +15,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY requirements.txt .
 
-# Install numpy first so thinc/spacy resolve and build against it,
-# rather than letting one resolver pass pick a mismatched combination.
 RUN pip install --no-cache-dir --user numpy==1.26.4 \
     && pip install --no-cache-dir --user -r requirements.txt
 
-# spaCy model must match the pinned spacy version above
 RUN python -m spacy download en_core_web_sm
 
 # ---- Runtime stage: slim image, only what's needed to run ----
@@ -29,12 +26,9 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV ONNX_MODEL_DIR=/app/.cache/onnx
-ENV PATH=/root/.local/bin:$PATH
-ENV PYTHONPATH=/root/.local/lib/python3.11/site-packages
 
 WORKDIR /app
 
-# Runtime-only system libs — no -dev/-headers packages, no build-essential
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr \
     tesseract-ocr-eng \
@@ -42,18 +36,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libopenjp2-7 \
     && rm -rf /var/lib/apt/lists/*
 
-# Bring over installed Python packages (including the spacy model) from builder
-COPY --from=builder /root/.local /root/.local
+# Create appuser BEFORE copying, so we can chown directly into place
+RUN useradd --create-home --shell /bin/bash appuser
 
-COPY download_model.py .
-RUN python download_model.py
+# Copy installed packages into appuser's own home instead of /root
+COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
 
-COPY . .
+ENV PATH=/home/appuser/.local/bin:$PATH
+ENV PYTHONPATH=/home/appuser/.local/lib/python3.11/site-packages
 
-# Run as non-root
-RUN useradd --create-home --shell /bin/bash appuser \
-    && chown -R appuser:appuser /app
+COPY --chown=appuser:appuser download_model.py .
+COPY --chown=appuser:appuser . .
+
+RUN chown -R appuser:appuser /app
+
 USER appuser
+
+RUN python download_model.py
 
 EXPOSE 8000
 EXPOSE 50051
