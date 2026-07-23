@@ -81,7 +81,12 @@ class LegalLensClassifier:
                     )
                 if r.status_code == 429:
                     wait = 4.0 * (2**attempt)
-                    logger.warning(f"Proxy rate-limited (429). Retrying in {wait}s.")
+                    # Extract suggested retry time if present in response body (e.g. "try again in 11.88s")
+                    import re
+                    match = re.search(r"try again in ([\d\.]+)s", r.text, re.IGNORECASE)
+                    if match:
+                        wait = max(float(match.group(1)) + 0.5, wait)
+                    logger.warning(f"Proxy rate-limited (429). Retrying in {round(wait, 2)}s.")
                     last_err = ValueError(f"HTTP 429: {r.text}")
                     await asyncio.sleep(wait)
                     continue
@@ -143,10 +148,10 @@ class LegalLensClassifier:
         if not self.configured:
             return self._classify_heuristics(clauses)
 
-        batch_size = 15
+        batch_size = 8
         for i in range(0, len(clauses), batch_size):
             if i > 0:
-                await asyncio.sleep(2.0)  # respect free-tier RPM limits
+                await asyncio.sleep(3.0)  # respect TPM/RPM limits
 
             batch = clauses[i : i + batch_size]
             batch_data = []

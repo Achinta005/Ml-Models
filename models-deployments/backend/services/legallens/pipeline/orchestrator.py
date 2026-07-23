@@ -43,7 +43,7 @@ async def run_analyze_pipeline(contract_id: str, s3_key: str, org_id: str, file_
         pages_data = await extractor.extract_text_async(str(local_path))
         
         # 3. Segment
-        clauses = segmenter.segment(pages_data)
+        clauses = await asyncio.to_thread(segmenter.segment, pages_data)
         
         # 4. Classify
         clauses = await classifier.classify(clauses)
