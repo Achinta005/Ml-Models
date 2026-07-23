@@ -35,8 +35,9 @@ SYSTEM_PROMPT = (
 class LegalLensClassifier:
     FALLBACK_MODELS = [
         "llama-3.1-8b-instant",
-        "llama-3.2-3b-preview",
-        "gemma2-9b-it",
+        "allam-2-7b",
+        "openai/gpt-oss-20b",
+        "qwen/qwen3.6-27b",
     ]
 
     def __init__(self, model_name: str = "llama-3.1-8b-instant"):
@@ -103,6 +104,10 @@ class LegalLensClassifier:
                         f"Model '{model}' hit 429 rate limit. Setting model cooldown for {round(cooldown_duration, 2)}s (retry text={retry_sec}s + 2s)."
                     )
                     raise ValueError(f"HTTP 429 rate limited on model {model}: {r.text}")
+                if r.status_code == 400 and "model_decommissioned" in r.text:
+                    self.model_cooldowns[model] = time.time() + 86400.0  # Blacklist model for 24 hours
+                    logger.warning(f"Model '{model}' is decommissioned. Permanently bypassing for 24h.")
+                    raise ValueError(f"HTTP 400 model_decommissioned on model {model}")
                 if r.status_code != 200:
                     raise ValueError(f"HTTP {r.status_code}: {r.text}")
 
@@ -150,8 +155,8 @@ class LegalLensClassifier:
                 return await self._call_proxy_with_model(model, batch_data)
             except Exception as e:
                 last_exception = e
-                if "HTTP 429" in str(e):
-                    logger.warning(f"Model '{model}' rate limited. Failing over to next available fallback model...")
+                if "HTTP 429" in str(e) or "model_decommissioned" in str(e):
+                    logger.warning(f"Model '{model}' error ({e}). Failing over to next available fallback model...")
                     continue
                 raise e
         raise last_exception or RuntimeError("All model fallbacks exhausted")
