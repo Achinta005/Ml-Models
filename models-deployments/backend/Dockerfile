@@ -14,7 +14,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Install numpy first so thinc/spacy resolve and build against it,
+# rather than letting one resolver pass pick a mismatched combination.
+RUN pip install --no-cache-dir --user numpy==1.26.4 \
+    && pip install --no-cache-dir --user -r requirements.txt
 
 # spaCy model must match the pinned spacy version above
 RUN python -m spacy download en_core_web_sm
