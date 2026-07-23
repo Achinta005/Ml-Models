@@ -32,6 +32,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr-eng \
     libjpeg62-turbo \
     libopenjp2-7 \
+    libpango-1.0-0 \
+    libpangoft2-1.0-0 \
+    libpangocairo-1.0-0 \
+    libcairo2 \
+    libgdk-pixbuf2.0-0 \
+    libffi-dev \
+    shared-mime-info \
+    fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
 # Create appuser BEFORE copying, so we can chown directly into place
