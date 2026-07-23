@@ -40,7 +40,7 @@ async def run_analyze_pipeline(contract_id: str, s3_key: str, org_id: str, file_
             raise FileNotFoundError(f"File not found locally and Cloudinary download failed: {local_path}")
             
         # 2. Extract
-        pages_data = extractor.extract_text(str(local_path))
+        pages_data = await extractor.extract_text_async(str(local_path))
         
         # 3. Segment
         clauses = segmenter.segment(pages_data)

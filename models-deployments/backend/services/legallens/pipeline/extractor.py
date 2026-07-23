@@ -1,4 +1,5 @@
 import logging
+import asyncio
 import pdfplumber
 import pytesseract
 from PIL import Image
@@ -84,6 +85,22 @@ class LegalLensExtractor:
             url, _ = cloudinary.utils.cloudinary_url(file_key, resource_type="raw")
             urllib.request.urlretrieve(url, str(local_path))
 
+    def _ocr_page(self, page) -> tuple[str, float]:
+        pil_img = page.to_image(resolution=300).original
+        data = pytesseract.image_to_data(
+            pil_img, lang="eng", output_type=pytesseract.Output.DICT
+        )
+        ocr_text = " ".join(w for w in data["text"] if w.strip())
+        confs = [int(c) for c in data["conf"] if c not in ("-1", "")]
+        ocr_confidence = sum(confs) / len(confs) if confs else 0
+        return ocr_text.strip(), ocr_confidence
+
+    async def extract_text_async(self, file_path: str) -> list[dict]:
+        """
+        Non-blocking wrapper around extract_text to keep Uvicorn/Gunicorn worker healthy during heavy OCR.
+        """
+        return await asyncio.to_thread(self.extract_text, file_path)
+
     def extract_text(self, file_path: str) -> list[dict]:
         """
         Extracts text from PDF using pdfplumber.
@@ -110,15 +127,10 @@ class LegalLensExtractor:
                     if len(stripped) < 100:
                         logger.info(f"Page {page_no}: sparse text, falling back to OCR.")
                         try:
-                            pil_img = page.to_image(resolution=300).original
-                            data = pytesseract.image_to_data(
-                                pil_img, lang="eng", output_type=pytesseract.Output.DICT
-                            )
-                            ocr_text = " ".join(w for w in data["text"] if w.strip())
-                            confs = [int(c) for c in data["conf"] if c not in ("-1", "")]
-                            entry["ocr_confidence"] = sum(confs) / len(confs) if confs else 0
+                            ocr_text, ocr_conf = self._ocr_page(page)
+                            entry["ocr_confidence"] = ocr_conf
                             entry["source"] = "ocr"
-                            stripped = ocr_text.strip()
+                            stripped = ocr_text
                         except Exception as ocr_err:
                             logger.warning(f"OCR failed on Page {page_no} (using sparse native text as fallback): {ocr_err}")
                             entry["ocr_confidence"] = 0

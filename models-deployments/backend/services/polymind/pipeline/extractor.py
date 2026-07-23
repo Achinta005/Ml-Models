@@ -1,5 +1,6 @@
 # extractor.py
 import logging
+import asyncio
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -15,6 +16,10 @@ class Page:
     text: str
     source: str
     ocr_applied: bool = field(default=False)
+
+
+async def extract_async(file_path: str) -> list[Page]:
+    return await asyncio.to_thread(extract, file_path)
 
 
 def extract(file_path: str) -> list[Page]:

@@ -5,7 +5,7 @@ import httpx
 import os
 import tempfile
 
-from services.polymind.pipeline.extractor import extract
+from services.polymind.pipeline.extractor import extract_async
 from services.polymind.pipeline.chunker import chunk
 from services.polymind.pipeline.embedder import Embedder
 from services.polymind.pipeline.indexer import Indexer
@@ -61,9 +61,9 @@ async def run_injest_pipeline(
         embedder = get_embedder()
         indexer = get_indexer()
 
-        pages = extract(tmp_path)
-        chunks = chunk(pages, doc_id)
-        vectors = embedder.embed(chunks)
+        pages = await extract_async(tmp_path)
+        chunks = await asyncio.to_thread(chunk, pages, doc_id)
+        vectors = await asyncio.to_thread(embedder.embed, chunks)
         embedding_ids = await indexer.add_and_persist(vectors)
 
         await db.save_chunks(chunks, embedding_ids, user_id)
