@@ -1,6 +1,7 @@
 import logging
 import json
 import asyncio
+import time
 import httpx
 from core.config import settings
 
@@ -32,24 +33,40 @@ SYSTEM_PROMPT = (
 
 
 class LegalLensClassifier:
+    FALLBACK_MODELS = [
+        "llama-3.1-8b-instant",
+        "llama-3.2-3b-preview",
+        "gemma2-9b-it",
+    ]
+
     def __init__(self, model_name: str = "llama-3.1-8b-instant"):
         self.model_name = model_name
         self.configured = bool(settings.GROQ_API_KEY and settings.GROQ_BASE_URL)
+        self.model_cooldowns: dict[str, float] = {}  # {model_name: cooldown_until_timestamp}
 
         if self.configured:
             logger.info(
-                f"LegalLensClassifier initialized (model={model_name}, proxy={settings.GROQ_BASE_URL})"
+                f"LegalLensClassifier initialized (primary model={model_name}, fallbacks={self.FALLBACK_MODELS[1:]})"
             )
         else:
             logger.warning(
                 "GROQ_API_KEY or GROQ_BASE_URL not configured. LegalLensClassifier will use heuristics only."
             )
 
-    async def _call_proxy(self, batch_data: list, max_retries: int = 2):
-        """POSTs to the Groq proxy, authenticated via x-api-key. Returns the
-        raw response content string, or raises after exhausting retries."""
+    def _extract_retry_seconds(self, error_text: str) -> float:
+        import re
+        match = re.search(r"try again in ([\d\.]+)s", error_text, re.IGNORECASE)
+        if match:
+            try:
+                return float(match.group(1))
+            except ValueError:
+                pass
+        return 5.0  # default fallback retry time if not parsed
+
+    async def _call_proxy_with_model(self, model: str, batch_data: list, max_retries: int = 1):
+        """POSTs to the Groq proxy with a specified model."""
         body = {
-            "model": self.model_name,
+            "model": model,
             "messages": [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": json.dumps(batch_data)},
@@ -75,21 +92,17 @@ class LegalLensClassifier:
                     )
 
                 if r.status_code == 401:
-                    # Auth failures won't fix themselves on retry — fail fast.
                     raise ValueError(
                         "Proxy rejected x-api-key — check GROQ_API_KEY is valid"
                     )
                 if r.status_code == 429:
-                    wait = 4.0 * (2**attempt)
-                    # Extract suggested retry time if present in response body (e.g. "try again in 11.88s")
-                    import re
-                    match = re.search(r"try again in ([\d\.]+)s", r.text, re.IGNORECASE)
-                    if match:
-                        wait = max(float(match.group(1)) + 0.5, wait)
-                    logger.warning(f"Proxy rate-limited (429). Retrying in {round(wait, 2)}s.")
-                    last_err = ValueError(f"HTTP 429: {r.text}")
-                    await asyncio.sleep(wait)
-                    continue
+                    retry_sec = self._extract_retry_seconds(r.text)
+                    cooldown_duration = retry_sec + 2.0
+                    self.model_cooldowns[model] = time.time() + cooldown_duration
+                    logger.warning(
+                        f"Model '{model}' hit 429 rate limit. Setting model cooldown for {round(cooldown_duration, 2)}s (retry text={retry_sec}s + 2s)."
+                    )
+                    raise ValueError(f"HTTP 429 rate limited on model {model}: {r.text}")
                 if r.status_code != 200:
                     raise ValueError(f"HTTP {r.status_code}: {r.text}")
 
@@ -100,26 +113,48 @@ class LegalLensClassifier:
                 return content
 
             except ValueError as e:
-                # Auth errors: don't retry. Everything else: retry with backoff.
-                if "x-api-key" in str(e) or attempt == max_retries:
+                if "x-api-key" in str(e) or "HTTP 429" in str(e) or attempt == max_retries:
                     raise
                 last_err = e
-                wait = 2.0 * (2**attempt)
-                logger.warning(
-                    f"Proxy call failed (attempt {attempt + 1}), retrying in {wait}s: {e}"
-                )
-                await asyncio.sleep(wait)
+                await asyncio.sleep(1.0)
             except Exception as e:
                 if attempt == max_retries:
                     raise
                 last_err = e
-                wait = 2.0 * (2**attempt)
-                logger.warning(
-                    f"Proxy call failed (attempt {attempt + 1}), retrying in {wait}s: {e}"
-                )
-                await asyncio.sleep(wait)
+                await asyncio.sleep(1.0)
 
-        raise last_err or RuntimeError("Proxy call failed with no captured error")
+        raise last_err or RuntimeError(f"Proxy call failed for model {model}")
+
+    async def _call_proxy(self, batch_data: list):
+        """
+        Tries primary model first, falling back to secondary models on 429.
+        Respects active model cooldown periods (retry time + 2s).
+        """
+        now = time.time()
+        available_models = [
+            m for m in self.FALLBACK_MODELS
+            if self.model_cooldowns.get(m, 0) <= now
+        ]
+
+        # If all models are currently in cooldown, pick the one that expires earliest and wait briefly
+        if not available_models:
+            earliest_model = min(self.FALLBACK_MODELS, key=lambda m: self.model_cooldowns.get(m, 0))
+            wait_time = max(0.1, self.model_cooldowns[earliest_model] - now)
+            logger.info(f"All classifier models on 429 cooldown. Waiting {round(wait_time, 2)}s for model '{earliest_model}'...")
+            await asyncio.sleep(wait_time)
+            available_models = [earliest_model]
+
+        last_exception = None
+        for model in available_models:
+            try:
+                return await self._call_proxy_with_model(model, batch_data)
+            except Exception as e:
+                last_exception = e
+                if "HTTP 429" in str(e):
+                    logger.warning(f"Model '{model}' rate limited. Failing over to next available fallback model...")
+                    continue
+                raise e
+        raise last_exception or RuntimeError("All model fallbacks exhausted")
 
     def _validate_result(self, result: dict | None) -> dict | None:
         if not result:
