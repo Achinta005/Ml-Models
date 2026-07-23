@@ -63,4 +63,5 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)" || exit 1
 
 CMD ["gunicorn", "main:app", "-k", "uvicorn.workers.UvicornWorker", \
-     "--bind", "0.0.0.0:8000", "--workers", "1", "--timeout", "120"]
+     "--bind", "0.0.0.0:8000", "--workers", "1", \
+     "--timeout", "300", "--graceful-timeout", "30"]
