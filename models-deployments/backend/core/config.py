@@ -57,6 +57,7 @@ class Settings(BaseSettings):
     # LegalLens / External API Keys
     LEGALLENS_API_KEY: str = ""
     GROQ_API_KEY: str = ""
+    GROQ_BASE_URL: str = "https://groq-proxy-0t5r.onrender.com/groq/auth"
     QDRANT_URL: str = "http://localhost:6333"
     QDRANT_API_KEY: str = ""
     
