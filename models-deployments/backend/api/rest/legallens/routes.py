@@ -6,6 +6,7 @@ from api.rest.legallens.qa.router import router as qa_router
 from api.rest.legallens.cross_query.router import router as cross_query_router
 from api.rest.legallens.export.router import router as export_router
 from api.rest.legallens.get_clauses.router import router as get_router
+from api.rest.legallens.compare.router import router as compare_router
 
 router = APIRouter(
     prefix="/legallens",
@@ -18,3 +19,5 @@ router.include_router(qa_router)
 router.include_router(cross_query_router)
 router.include_router(export_router)
 router.include_router(get_router)
+router.include_router(compare_router)
+

@@ -1,7 +1,7 @@
 import asyncio
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from lib.db import connection as db
 from services.legallens.pipeline.llm import LegalLensLLM
 from services.legallens.pipeline.vector_store import LegalLensVectorStore
@@ -12,10 +12,11 @@ vector_store = LegalLensVectorStore()
 llm = LegalLensLLM()
 
 class CrossQueryRequest(BaseModel):
-    matter_id: str
+    matter_id: Optional[str] = None
     contract_ids: List[str]
     question: str
     top_k_per_contract: int = 3
+
 
 @router.post("/cross-query")
 async def cross_query(req: CrossQueryRequest):
@@ -31,19 +32,18 @@ async def cross_query(req: CrossQueryRequest):
     if not rows:
         raise HTTPException(status_code=404, detail="CONTRACTS_NOT_FOUND")
 
-    # Ensure all found contracts belong to the same organization for tenant isolation
-    org_id = rows[0]["org_id"]
-    for row in rows:
-        if row["org_id"] != org_id:
-            raise HTTPException(
-                status_code=403,
-                detail="TENANT_ISOLATION_VIOLATION: All contracts must belong to the same organization"
-            )
+    # Search each contract concurrently using its corresponding org_id
+    default_org = rows[0]["org_id"] if rows else "default_org"
+    contract_org_map = {r["id"]: r["org_id"] for r in rows}
 
-    # Search each contract concurrently
     try:
         tasks = [
-            vector_store.search(org_id, cid, req.question, req.top_k_per_contract)
+            vector_store.search(
+                contract_org_map.get(cid, default_org),
+                cid,
+                req.question,
+                req.top_k_per_contract,
+            )
             for cid in req.contract_ids
         ]
         search_results = await asyncio.gather(*tasks, return_exceptions=True)

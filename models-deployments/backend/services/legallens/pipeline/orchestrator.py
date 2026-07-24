@@ -56,11 +56,11 @@ async def run_analyze_pipeline(contract_id: str, s3_key: str, org_id: str, file_
         await vector_store.upsert_clauses(org_id, contract_id, clauses)
         
         # 7. Write to Postgres
-        await _save_to_postgres(contract_id, org_id, file_name, mime_type, clauses, start_time)
+        score = await _save_to_postgres(contract_id, org_id, file_name, mime_type, clauses, start_time)
         
-        # 8. Emit to NestJS WebSocket (Mocked for now)
-        logger.info(f"MOCK: Emitting websocket event to NestJS for {contract_id}: status=done")
-        
+        # 8. Emit real completion webhook to NestJS server (https://server.achinta.me/api)
+        await _notify_nestjs_backend(contract_id, org_id, "completed", risk_score=score)
+
     except Exception as e:
         logger.error(f"Pipeline failed for {contract_id}: {e}")
         try:
@@ -68,6 +68,8 @@ async def run_analyze_pipeline(contract_id: str, s3_key: str, org_id: str, file_
                 await conn.execute("UPDATE contracts SET status = 'error' WHERE id = $1", contract_id)
         except Exception as db_e:
             logger.error(f"Failed to set error status in DB: {db_e}")
+        
+        await _notify_nestjs_backend(contract_id, org_id, "failed", error_message=str(e))
         raise e
     finally:
         # Cleanup the entire temporary contract directory
@@ -77,7 +79,7 @@ async def run_analyze_pipeline(contract_id: str, s3_key: str, org_id: str, file_
             except Exception as e:
                 logger.warning(f"Failed to delete temp directory {base_temp_dir}: {e}")
 
-async def _save_to_postgres(contract_id: str, org_id: str, file_name: str, mime_type: str, clauses: list[dict], start_time: float):
+async def _save_to_postgres(contract_id: str, org_id: str, file_name: str, mime_type: str, clauses: list[dict], start_time: float) -> int:
     processing_time_ms = int((time.time() - start_time) * 1000)
     
     total = len(clauses)
@@ -117,3 +119,27 @@ async def _save_to_postgres(contract_id: str, org_id: str, file_name: str, mime_
                 c.get("risk_label"), int(c.get("confidence", 0)*100), c.get("confidence"), c.get("explanation"))
                 
     logger.info(f"Saved {contract_id} to DB. Score: {score}, Time: {processing_time_ms}ms")
+    return score
+
+async def _notify_nestjs_backend(contract_id: str, org_id: str, status: str, risk_score: int = 0, error_message: str = None):
+    """Posts webhook notification to NestJS backend server (server.achinta.me/api)"""
+    import httpx
+    url = f"{settings.NESTJS_BACKEND_URL}/legallens/webhooks/status"
+    headers = {
+        "x-api-key": settings.NESTJS_API_KEY,
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "contract_id": contract_id,
+        "org_id": org_id,
+        "status": status,
+        "risk_score": risk_score,
+        "error_message": error_message
+    }
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.post(url, json=payload, headers=headers)
+            logger.info(f"Notified NestJS backend for {contract_id}: status={status}, HTTP {resp.status_code}")
+    except Exception as e:
+        logger.warning(f"Failed to send webhook to NestJS backend ({url}): {e}")
+

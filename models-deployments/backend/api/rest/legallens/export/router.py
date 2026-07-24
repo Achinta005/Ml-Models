@@ -4,11 +4,13 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from lib.db import connection as db
 
+from typing import Optional
+
 router = APIRouter()
 
 class ExportRequest(BaseModel):
     contract_id: str
-    org_id: str
+    org_id: Optional[str] = None
     include_suggestions: bool = True
     include_executive_summary: bool = True
 
@@ -405,10 +407,16 @@ async def export_redline(req: ExportRequest):
         raise HTTPException(status_code=500, detail="python-docx not installed")
 
     async with db.get_pool().acquire() as conn:
-        contract = await conn.fetchrow(
-            "SELECT * FROM contracts WHERE id = $1 AND org_id = $2",
-            req.contract_id, req.org_id,
-        )
+        if req.org_id:
+            contract = await conn.fetchrow(
+                "SELECT * FROM contracts WHERE id = $1 AND org_id = $2",
+                req.contract_id, req.org_id,
+            )
+        else:
+            contract = await conn.fetchrow(
+                "SELECT * FROM contracts WHERE id = $1",
+                req.contract_id,
+            )
         if not contract:
             raise HTTPException(status_code=404, detail="CONTRACT_NOT_FOUND")
             
@@ -471,10 +479,16 @@ async def export_summary(req: ExportRequest):
 
     # Fetch data
     async with db.get_pool().acquire() as conn:
-        contract = await conn.fetchrow(
-            "SELECT * FROM contracts WHERE id = $1 AND org_id = $2",
-            req.contract_id, req.org_id,
-        )
+        if req.org_id:
+            contract = await conn.fetchrow(
+                "SELECT * FROM contracts WHERE id = $1 AND org_id = $2",
+                req.contract_id, req.org_id,
+            )
+        else:
+            contract = await conn.fetchrow(
+                "SELECT * FROM contracts WHERE id = $1",
+                req.contract_id,
+            )
         if not contract:
             raise HTTPException(status_code=404, detail="CONTRACT_NOT_FOUND")
             

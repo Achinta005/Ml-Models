@@ -65,6 +65,10 @@ class Settings(BaseSettings):
     CLOUDINARY_CLOUD_NAME: str = "dc1fkirb4"
     CLOUDINARY_API_KEY: str = "711863913841531"
     CLOUDINARY_API_SECRET: str = "Jatf0fvZ6zeDcIRWxUC0OOwsNOU"
+
+    # NestJS Webhook / Event Emitter Config
+    NESTJS_BACKEND_URL: str = ""
+    NESTJS_API_KEY: str = "LL-YT2uCOepuf5nbVYoq8GMr0WLqEikUKM8"
     
     class Config:
         env_file = ".env"
