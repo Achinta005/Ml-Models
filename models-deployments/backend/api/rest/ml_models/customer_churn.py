@@ -2,8 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from typing import Dict
 import pandas as pd
 
-from lib.utils.model_loader import models
-import pandas as pd
+from lib.utils.model_loader import models, get_customer_churn_model
 from lib.utils.helpers import get_risk_level
 from core.logger import logger
 
@@ -21,8 +20,9 @@ router = APIRouter()
 async def predict_customer_churn(request: Dict):
     """Predict Customer Churn (Flask-equivalent FastAPI version)"""
     try:
+        model_data = get_customer_churn_model()
         # Check model availability
-        if models.customer_churn_model is None:
+        if model_data is None:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Model not loaded. Check model_loader configuration.",

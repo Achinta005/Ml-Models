@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import Dict, Any
 
-from lib.utils.model_loader import models
+from lib.utils.model_loader import models, get_heart_disease_model
 import pandas as pd
 from core.logger import logger
 from lib.utils.helpers import process_input_data, get_risk_level
@@ -17,7 +17,8 @@ router = APIRouter()
 async def predict_heart_disease(request: Dict[str, Any]):
     """Predict heart disease risk (Flask-equivalent FastAPI version)"""
     try:
-        if models.heart_disease_model is None:
+        model_data = get_heart_disease_model()
+        if model_data is None:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Model not loaded",

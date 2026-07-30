@@ -4,7 +4,9 @@ from api.rest.ml_models import (
     heart_disease,
     customer_churn,
     customer_uplift,
+    traceum,
 )
+from api.rest.polymind.routes import router as polymind_router
 from api.rest.llm import llm
 from api.rest.legallens.routes import router as legallens_router
 
@@ -26,7 +28,16 @@ api_router.include_router(
     customer_uplift.router, prefix="/predict_uplift", tags=["uplift Prediction"]
 )
 
+api_router.include_router(
+    traceum.router, prefix="/traceum", tags=["Traceum Uplift Prediction"]
+)
+
+api_router.include_router(
+    polymind_router, prefix="/polymind", tags=["PolyMind RAG"]
+)
+
 api_router.include_router(llm.router, prefix="/api/llm", tags=["LLM - Llama 3.1"])
 
 
 api_router.include_router(legallens_router, tags=["LegalLens"])
+

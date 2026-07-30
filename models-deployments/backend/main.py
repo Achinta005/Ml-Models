@@ -11,25 +11,14 @@ import uvicorn
 from core.logger import setup_logging, logger
 from core.config import settings
 from core.exceptions import global_exception_handler
-from lib.utils.model_loader import load_all_models
 from lib.db import connection as db
 from api.rest.routes import api_router
-from api.grpc.server import serve as grpc_serve, set_main_loop
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events"""
-    load_all_models()
-
     await db.connect()
     await db.create_tables()
-
-    # Pass the running uvicorn loop to gRPC before starting the thread
-    set_main_loop(asyncio.get_event_loop())
-
-    grpc_thread = threading.Thread(target=grpc_serve, daemon=True)
-    grpc_thread.start()
-    logger.info("gRPC server started on port 50051")
 
     logger.info("Server ready!")
     yield

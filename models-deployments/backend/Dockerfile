@@ -65,7 +65,6 @@ RUN python -m spacy download en_core_web_sm
 RUN python download_model.py
 
 EXPOSE 8000
-EXPOSE 50051
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)" || exit 1

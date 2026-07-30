@@ -165,15 +165,33 @@ def load_traceum_s_model():
     
     
     
-def load_all_models():
-    """Load all models on startup"""
-    logger.info("Loading all models...")
-    load_medical_charge_models()
-    load_heart_disease_model()
-    load_customer_churn_model()
-    load_uplift_treated_model()
-    load_uplift_control_model()
-    load_traceum_treated_model()
-    load_traceum_control_model()
-    load_traceum_s_model()
-    logger.info("Model loading complete!")
+def get_medical_charge_models():
+    if models.smoker_model is None or models.non_smoker_model is None:
+        load_medical_charge_models()
+    return models.smoker_model, models.non_smoker_model
+
+def get_heart_disease_model():
+    if models.heart_disease_model is None:
+        load_heart_disease_model()
+    return models.heart_disease_model
+
+def get_customer_churn_model():
+    if models.customer_churn_model is None:
+        load_customer_churn_model()
+    return models.customer_churn_model
+
+def get_uplift_models():
+    if models.uplift_treated_model is None:
+        load_uplift_treated_model()
+    if models.uplift_control_model is None:
+        load_uplift_control_model()
+    return models.uplift_treated_model, models.uplift_control_model
+
+def get_traceum_models():
+    if models.traceum_treated_model is None:
+        load_traceum_treated_model()
+    if models.traceum_control_model is None:
+        load_traceum_control_model()
+    if models.traceum_s_model is None:
+        load_traceum_s_model()
+    return models.traceum_treated_model, models.traceum_control_model, models.traceum_s_model

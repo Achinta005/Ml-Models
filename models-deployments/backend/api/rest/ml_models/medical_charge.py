@@ -4,7 +4,7 @@ from typing import Literal
 import numpy as np
 import pandas as pd
 
-from lib.utils.model_loader import models
+from lib.utils.model_loader import models, get_medical_charge_models
 from lib.utils.helpers import validate_age, validate_bmi, validate_children
 from core.logger import logger
 
@@ -57,8 +57,8 @@ class MedicalChargeResponse(BaseModel):
 async def predict_medical_charge(request: MedicalChargeRequest):
     """Predict medical charges based on input data"""
     try:
-        # Check if models are loaded
-        if not models.smoker_model or not models.non_smoker_model:
+        smoker_model, non_smoker_model = get_medical_charge_models()
+        if not smoker_model or not non_smoker_model:
             logger.error("Models not loaded")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -86,9 +86,9 @@ async def predict_medical_charge(request: MedicalChargeRequest):
         
         # Make prediction
         if request.smoker == 'yes':
-            prediction = models.smoker_model.predict(input_array)[0]
+            prediction = smoker_model.predict(input_array)[0]
         else:
-            prediction = models.non_smoker_model.predict(input_array)[0]
+            prediction = non_smoker_model.predict(input_array)[0]
         
         logger.info(f"Prediction successful: {prediction:.2f}")
         

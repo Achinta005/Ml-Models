@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Dict
 import pandas as pd
 
-from lib.utils.model_loader import models
+from lib.utils.model_loader import models, get_uplift_models
 from core.logger import logger
 
 router = APIRouter()
@@ -67,10 +67,11 @@ class CustomerUpliftResponse(BaseModel):
 async def predict_customer_uplift(request: CustomerUpliftRequest):
     """Predict customer uplift and ad decision"""
     try:
+        uplift_treated_model, uplift_control_model = get_uplift_models()
         # Check if models are loaded
         if (
-            models.uplift_treated_model is None
-            or models.uplift_control_model is None
+            uplift_treated_model is None
+            or uplift_control_model is None
         ):
             logger.error("Uplift models not loaded")
             raise HTTPException(
@@ -100,8 +101,8 @@ async def predict_customer_uplift(request: CustomerUpliftRequest):
         input_df = pd.DataFrame([input_features], columns=feature_names)
 
         # Predict probabilities
-        p_treat = models.uplift_treated_model.predict_proba(input_df)[0, 1]
-        p_control = models.uplift_control_model.predict_proba(input_df)[0, 1]
+        p_treat = uplift_treated_model.predict_proba(input_df)[0, 1]
+        p_control = uplift_control_model.predict_proba(input_df)[0, 1]
 
         uplift = p_treat - p_control
         decision = should_send_ad(uplift)
