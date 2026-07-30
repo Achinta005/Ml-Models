@@ -35,3 +35,7 @@ models/*
 credentials.json
 token.pickle
 service_account.json
+
+# Logs
+*.log
+app.log
