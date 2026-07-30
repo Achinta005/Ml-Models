@@ -7,6 +7,13 @@ from core.config import settings
 from core.pulsewire_setup import pulsewire
 
 
+STANDARD_LOG_RECORD_ATTRS = {
+    "args", "asctime", "created", "exc_info", "exc_text", "filename",
+    "funcName", "levelname", "levelno", "lineno", "module", "msecs",
+    "message", "msg", "name", "pathname", "process", "processName",
+    "relativeCreated", "stack_info", "thread", "threadName",
+}
+
 class InterceptHandler(logging.Handler):
     """
     Default handler to intercept standard logging messages
@@ -23,21 +30,26 @@ class InterceptHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        loguru_logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
+        extra = {k: v for k, v in record.__dict__.items() if k not in STANDARD_LOG_RECORD_ATTRS}
+
+        loguru_logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage(), **extra)
 
 
 SKIP_ENDPOINTS = {"/", "/health"}
+PULSEWIRE_URL = "pulsewire-worker.server-achinta-gateway.workers.dev"
 
 def _pulsewire_sink(message):
     """Loguru sink that forwards each log record to Pulsewire."""
     record = message.record
 
+    text = record["message"]
     endpoint = record["extra"].get("endpoint", "")
     if endpoint in SKIP_ENDPOINTS or endpoint.endswith(" /health") or endpoint == "/health":
         return
+    if PULSEWIRE_URL in text:
+        return
 
     level = record["level"].name.lower()
-    text = record["message"]
     meta = {
         "module": record["name"],
         "function": record["function"],
