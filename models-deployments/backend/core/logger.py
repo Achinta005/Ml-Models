@@ -26,9 +26,16 @@ class InterceptHandler(logging.Handler):
         loguru_logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
+SKIP_PATHS = {"/", "/health"}
+
 def _pulsewire_sink(message):
     """Loguru sink that forwards each log record to Pulsewire."""
     record = message.record
+
+    path = record["extra"].get("path")
+    if path in SKIP_PATHS:
+        return
+
     level = record["level"].name.lower()
     text = record["message"]
     meta = {
