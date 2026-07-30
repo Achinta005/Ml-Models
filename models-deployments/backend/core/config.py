@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     # App Config
     APP_NAME: str = "ML Models API"
     VERSION: str = "2.0.0"
-    ENVIRONMENT: str = "development"
+    ENVIRONMENT: str = ""
     DEBUG: bool = True
     
     # Server Config
@@ -69,6 +69,8 @@ class Settings(BaseSettings):
     # NestJS Webhook / Event Emitter Config
     NESTJS_BACKEND_URL: str = ""
     NESTJS_API_KEY: str = "LL-YT2uCOepuf5nbVYoq8GMr0WLqEikUKM8"
+
+    PULSEWIRE_INGEST_KEY: str = ""
     
     class Config:
         env_file = ".env"

@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+COPY vendor ./vendor
 
 RUN pip install --no-cache-dir --user numpy==1.26.4 \
     && pip install --no-cache-dir --user -r requirements.txt
@@ -42,10 +43,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
-# Create appuser BEFORE copying, so we can chown directly into place
 RUN useradd --create-home --shell /bin/bash appuser
 
-# Copy installed packages into appuser's own home instead of /root
 COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
 
 ENV PATH=/home/appuser/.local/bin:$PATH
@@ -57,9 +56,7 @@ COPY --chown=appuser:appuser . .
 RUN chown -R appuser:appuser /app
 
 USER appuser
- 
-# Download spaCy model AFTER switching to appuser, into the runtime stage
-# so it lands in the same site-packages tree that PYTHONPATH points to
+
 RUN python -m spacy download en_core_web_sm
 
 RUN python download_model.py

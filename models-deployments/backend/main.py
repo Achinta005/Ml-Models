@@ -13,6 +13,7 @@ from core.config import settings
 from core.exceptions import global_exception_handler
 from lib.db import connection as db
 from api.rest.routes import api_router
+from core.pulsewire_setup import pulsewire
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -20,10 +21,12 @@ async def lifespan(app: FastAPI):
     await db.connect()
     await db.create_tables()
 
+    pulsewire.start()
     logger.info("Server ready!")
     yield
 
     await db.disconnect()
+    await pulsewire.close()
     logger.info("Shutting down...")
     
 
