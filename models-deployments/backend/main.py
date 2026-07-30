@@ -50,19 +50,31 @@ app.add_middleware(
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    """Log all incoming requests with timing"""
+    """Log all incoming requests with timing, endpoint, and client info"""
     request_id = str(uuid.uuid4())
     start_time = time.time()
     
     request.state.request_id = request_id
-    
+
+    user_agent = request.headers.get("user-agent", "")
+    referer = request.headers.get("referer", "")
+    x_forwarded_for = request.headers.get("x-forwarded-for", "")
+    auth_header = request.headers.get("authorization", "")
+    auth_type = auth_header.split(" ")[0] if auth_header else "none"
+
+    endpoint = f"{request.method} {request.url.path}"
+    client_ip = request.client.host if request.client else "unknown"
+
     logger.info(
         f"Request started",
         extra={
             "request_id": request_id,
-            "method": request.method,
-            "path": request.url.path,
-            "client_ip": request.client.host if request.client else "unknown",
+            "endpoint": endpoint,
+            "client_ip": client_ip,
+            "user_agent": user_agent,
+            "referer": referer,
+            "x_forwarded_for": x_forwarded_for,
+            "auth_type": auth_type,
         }
     )
     
@@ -74,8 +86,12 @@ async def log_requests(request: Request, call_next):
             f"Request completed",
             extra={
                 "request_id": request_id,
-                "method": request.method,
-                "path": request.url.path,
+                "endpoint": endpoint,
+                "client_ip": client_ip,
+                "user_agent": user_agent,
+                "referer": referer,
+                "x_forwarded_for": x_forwarded_for,
+                "auth_type": auth_type,
                 "status_code": response.status_code,
                 "duration_ms": round(duration_ms, 2),
             }
@@ -92,8 +108,12 @@ async def log_requests(request: Request, call_next):
             f"Request failed: {str(e)}",
             extra={
                 "request_id": request_id,
-                "method": request.method,
-                "path": request.url.path,
+                "endpoint": endpoint,
+                "client_ip": client_ip,
+                "user_agent": user_agent,
+                "referer": referer,
+                "x_forwarded_for": x_forwarded_for,
+                "auth_type": auth_type,
                 "duration_ms": round(duration_ms, 2),
             },
             exc_info=True

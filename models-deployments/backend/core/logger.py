@@ -26,14 +26,14 @@ class InterceptHandler(logging.Handler):
         loguru_logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
-SKIP_PATHS = {"/", "/health"}
+SKIP_ENDPOINTS = {"/", "/health"}
 
 def _pulsewire_sink(message):
     """Loguru sink that forwards each log record to Pulsewire."""
     record = message.record
 
-    path = record["extra"].get("path")
-    if path in SKIP_PATHS:
+    endpoint = record["extra"].get("endpoint", "")
+    if endpoint in SKIP_ENDPOINTS or endpoint.endswith(" /health") or endpoint == "/health":
         return
 
     level = record["level"].name.lower()
@@ -43,6 +43,7 @@ def _pulsewire_sink(message):
         "function": record["function"],
         "line": record["line"],
     }
+    meta.update({k: v for k, v in record["extra"].items() if k not in ("module", "function", "line")})
     if record["exception"]:
         meta["exception"] = str(record["exception"])
 
@@ -71,7 +72,7 @@ def setup_logging():
 
     loguru_logger.add(
         sys.stdout,
-        format="<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+        format="<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level> | <yellow>{extra}</yellow>",
         level=settings.LOG_LEVEL,
         colorize=True
     )
