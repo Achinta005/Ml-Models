@@ -18,13 +18,14 @@ from core.pulsewire_setup import pulsewire
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events"""
-    await db.connect()
-    await db.create_tables()
+    # Connect in the background so the port opens right away; see connect_with_retry.
+    db_task = asyncio.create_task(db.connect_with_retry())
 
     pulsewire.start()
     logger.info("Server ready!")
     yield
 
+    db_task.cancel()
     await db.disconnect()
     await pulsewire.close()
     logger.info("Shutting down...")
@@ -142,7 +143,8 @@ async def health_check():
         "status": "ok",
         "uptime": time.time(),
         "timestamp": int(time.time() * 1000),
-        "environment": settings.ENVIRONMENT
+        "environment": settings.ENVIRONMENT,
+        "database": "up" if db.is_ready() else "connecting",
     }
 
 if __name__ == "__main__":

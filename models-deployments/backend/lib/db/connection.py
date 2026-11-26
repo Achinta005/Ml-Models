@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import asyncpg
 
@@ -10,6 +11,11 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 _pool: asyncpg.Pool | None = None
 _pool_legallens: asyncpg.Pool | None = None
+CONNECT_TIMEOUT = 15  # seconds per attempt
+
+
+def is_ready() -> bool:
+    return _pool is not None and _pool_legallens is not None
 
 
 async def connect():
@@ -22,6 +28,7 @@ async def connect():
         user=settings.POSTGRES_USER,
         password=settings.POSTGRES_PASSWORD,
         database=settings.POSTGRES_DB,
+        timeout=CONNECT_TIMEOUT,
     )
     try:
         await schema_conn.execute(f"CREATE SCHEMA IF NOT EXISTS {settings.POSTGRES_SCHEMA};")
@@ -36,8 +43,9 @@ async def connect():
         password=settings.POSTGRES_PASSWORD,
         database=settings.POSTGRES_DB,
         server_settings={"search_path": settings.POSTGRES_SCHEMA},
-        min_size=2,
+        min_size=1,
         max_size=10,
+        timeout=CONNECT_TIMEOUT,
     )
     
     _pool_legallens = await asyncpg.create_pool(
@@ -47,10 +55,40 @@ async def connect():
         password=settings.POSTGRES_PASSWORD,
         database=settings.POSTGRES_DB,
         server_settings={"search_path": settings.POSTGRES_SCHEMA_LEGALLENS},
-        min_size=2,
+        min_size=1,
         max_size=10,
+        timeout=CONNECT_TIMEOUT,
     )
     logger.info("PostgreSQL connection pools created.")
+
+
+async def connect_with_retry(max_delay: int = 60):
+    """Connect + create tables, retrying forever with backoff.
+
+    Runs as a background task so the HTTP server binds its port immediately
+    (Render kills services that do not open a port in time) and keeps serving
+    /health while Postgres is unreachable.
+    """
+    delay = 2
+    while True:
+        try:
+            await connect()
+            await create_tables()
+            return
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:
+            logger.error(
+                f"PostgreSQL connect failed ({type(exc).__name__}: {exc}); "
+                f"host={settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}. Retrying in {delay}s"
+            )
+            for pool_name in ("_pool", "_pool_legallens"):
+                pool = globals().get(pool_name)
+                if pool:
+                    await pool.close()
+                    globals()[pool_name] = None
+            await asyncio.sleep(delay)
+            delay = min(delay * 2, max_delay)
 
 
 async def disconnect():
