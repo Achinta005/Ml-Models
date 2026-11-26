@@ -33,7 +33,7 @@ class Indexer:
         n_neighbors = min(10, len(vectors))
         model = NearestNeighbors(
             n_neighbors=n_neighbors,
-            algorithm="kd_tree",
+            algorithm="brute",  # kd_tree does not support the cosine metric
             metric="cosine",
         )
         model.fit(matrix)
