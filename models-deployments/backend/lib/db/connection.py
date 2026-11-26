@@ -14,6 +14,31 @@ _pool_legallens: asyncpg.Pool | None = None
 CONNECT_TIMEOUT = 15  # seconds per attempt
 
 
+def _search_path_init(schema: str):
+    """Runs on every pool acquire (pool resets session state on release): Neon ignores search_path as a startup parameter."""
+    async def _init(conn):
+        await conn.execute(f'SET search_path TO "{schema}", public')
+    return _init
+
+
+def _conn_kwargs() -> dict:
+    """Common asyncpg connection args.
+
+    Neon's "-pooler" host is PgBouncer (transaction mode), which rejects the
+    search_path startup parameter and prepared statements, so use the direct
+    endpoint (same host without "-pooler").
+    """
+    return dict(
+        host=settings.POSTGRES_HOST.replace("-pooler", ""),
+        port=settings.POSTGRES_PORT,
+        user=settings.POSTGRES_USER,
+        password=settings.POSTGRES_PASSWORD,
+        database=settings.POSTGRES_DB,
+        ssl="require" if settings.POSTGRES_SSL else None,
+        timeout=CONNECT_TIMEOUT,
+    )
+
+
 def is_ready() -> bool:
     return _pool is not None and _pool_legallens is not None
 
@@ -23,12 +48,7 @@ async def connect():
     global _pool, _pool_legallens
     # Ensure the schemas exist
     schema_conn = await asyncpg.connect(
-        host=settings.POSTGRES_HOST,
-        port=settings.POSTGRES_PORT,
-        user=settings.POSTGRES_USER,
-        password=settings.POSTGRES_PASSWORD,
-        database=settings.POSTGRES_DB,
-        timeout=CONNECT_TIMEOUT,
+        **_conn_kwargs(),
     )
     try:
         await schema_conn.execute(f"CREATE SCHEMA IF NOT EXISTS {settings.POSTGRES_SCHEMA};")
@@ -37,27 +57,17 @@ async def connect():
         await schema_conn.close()
 
     _pool = await asyncpg.create_pool(
-        host=settings.POSTGRES_HOST,
-        port=settings.POSTGRES_PORT,
-        user=settings.POSTGRES_USER,
-        password=settings.POSTGRES_PASSWORD,
-        database=settings.POSTGRES_DB,
-        server_settings={"search_path": settings.POSTGRES_SCHEMA},
+        **_conn_kwargs(),
+        setup=_search_path_init(settings.POSTGRES_SCHEMA),
         min_size=1,
         max_size=10,
-        timeout=CONNECT_TIMEOUT,
     )
     
     _pool_legallens = await asyncpg.create_pool(
-        host=settings.POSTGRES_HOST,
-        port=settings.POSTGRES_PORT,
-        user=settings.POSTGRES_USER,
-        password=settings.POSTGRES_PASSWORD,
-        database=settings.POSTGRES_DB,
-        server_settings={"search_path": settings.POSTGRES_SCHEMA_LEGALLENS},
+        **_conn_kwargs(),
+        setup=_search_path_init(settings.POSTGRES_SCHEMA_LEGALLENS),
         min_size=1,
         max_size=10,
-        timeout=CONNECT_TIMEOUT,
     )
     logger.info("PostgreSQL connection pools created.")
 

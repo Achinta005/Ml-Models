@@ -51,6 +51,7 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = ""
     POSTGRES_PASSWORD: str = ""
     POSTGRES_DB: str = ""
+    POSTGRES_SSL: bool = True  # Neon requires TLS
     POSTGRES_SCHEMA: str = "public"
     POSTGRES_SCHEMA_LEGALLENS: str = "legallens"
     
